@@ -1,6 +1,6 @@
 <!-- src/routes/+layout.svelte -->
 <script>
-	// Layout component - no imports needed
+	import { injectAnalytics } from '@vercel/analytics/sveltekit'
 </script>
 
 <svelte:head>
