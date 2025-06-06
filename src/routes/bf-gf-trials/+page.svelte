@@ -2,137 +2,64 @@
 <script>
 // @ts-nocheck
 
-	// @ts-ignore
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
+	import { fade, fly, scale } from 'svelte/transition';
 	import AngerMeter from '$lib/components/AngerMeter.svelte';
-	import { questions } from '$lib/data/questions.js';
+	import { quizStore, currentQuestion, progress, finalResult } from '$lib/stores/quiz.js';
 	
-	let currentQuestion = 0;
-	let anger = 0;
-	let gameState = 'playing'; // 'playing', 'reaction', 'finished'
-	// @ts-ignore
-	let selectedAnswer = null;
-	let showReaction = false;
 	let shakeScreen = false;
-	let finalResult = '';
+	let transitioning = false;
+	// @ts-ignore
+	let autoAdvanceTimer;
 	
-	$: currentQ = questions[currentQuestion];
-	$: progress = ((currentQuestion + 1) / questions.length) * 100;
+	// Subscribe to store
+	$: ({ anger, gameState, selectedAnswer, showReaction, currentQuestionIndex } = $quizStore);
+	
+	// Watch for anger changes to trigger shake
+// @ts-ignore
+		$: if (selectedAnswer && selectedAnswer.anger >= 30) {
+		triggerShake();
+	}
+	
+	function triggerShake() {
+		shakeScreen = true;
+		setTimeout(() => shakeScreen = false, 500);
+	}
 	
 	// @ts-ignore
-	function selectAnswer(answer) {
-		if (gameState !== 'playing') return;
+	function handleAnswerSelect(answer) {
+		if (transitioning || gameState !== 'playing') return;
 		
-		selectedAnswer = answer;
-		gameState = 'reaction';
-		showReaction = true;
+		quizStore.selectAnswer(answer);
 		
-		// Add anger
-		// @ts-ignore
-		const oldAnger = anger;
-		anger = Math.min(anger + answer.anger, 100);
-		
-		// Shake effect for high anger increases
-		if (answer.anger >= 30) {
-			shakeScreen = true;
-			setTimeout(() => shakeScreen = false, 500);
-		}
-		
-		// Check if game over (anger hit 100%)
-		if (anger >= 100) {
-			// Game over - show reaction briefly then end
-			setTimeout(() => {
-				finishGame();
-			}, 2000);
-		} else {
-			// Auto advance after showing reaction
-			setTimeout(() => {
-				nextQuestion();
-			}, 3000);
-		}
+		// Auto advance after showing reaction - faster timing
+		const delay = anger >= 100 ? 1500 : 1800;
+		autoAdvanceTimer = setTimeout(() => {
+			handleNextQuestion();
+		}, delay);
 	}
 	
-	function nextQuestion() {
-		if (currentQuestion < questions.length - 1) {
-			currentQuestion++;
-			gameState = 'playing';
-			selectedAnswer = null;
-			showReaction = false;
-		} else {
-			finishGame();
-		}
+	function handleNextQuestion() {
+		transitioning = true;
+		quizStore.nextQuestion();
+		
+		// Reset transitioning flag quickly
+		setTimeout(() => {
+			transitioning = false;
+		}, 150);
 	}
 	
-	function finishGame() {
-		gameState = 'finished';
-		calculateResult();
-	}
-	
-	function calculateResult() {
-		if (anger === 0) {
-			// @ts-ignore
-			finalResult = {
-				title: "IMPOSSIBLE! Are you a mind reader?! 🔮",
-				subtitle: "Perfect BF Award 🏆",
-				description: "This is literally impossible. Did you hack the game?",
-				emoji: "🦄"
-			};
-		} else if (anger <= 20) {
-			// @ts-ignore
-			finalResult = {
-				title: "Good BF Award! 🏆",
-				subtitle: "Dragon Tamer Elite",
-				description: "You actually survived! Share this miracle with the world!",
-				emoji: "😎"
-			};
-		} else if (anger <= 50) {
-			// @ts-ignore
-			finalResult = {
-				title: "Not Bad! You Survived! 🎖️",
-				subtitle: "Dragon Survivor",
-				description: "She's only moderately angry. That's basically a win!",
-				emoji: "😅"
-			};
-		} else if (anger <= 80) {
-			// @ts-ignore
-			finalResult = {
-				title: "Walking on Thin Ice ❄️",
-				subtitle: "Danger Zone Navigator",
-				description: "You're sleeping on the couch, but at least you're still together!",
-				emoji: "🥶"
-			};
-		} else if (anger < 100) {
-			// @ts-ignore
-			finalResult = {
-				title: "In the Doghouse 🏚️",
-				subtitle: "Professional Apologizer",
-				description: "Start practicing your apology speech. You'll need it.",
-				emoji: "🐕"
-			};
-		} else {
-			// @ts-ignore
-			finalResult = {
-				title: "GAME OVER - Single Again 💔",
-				subtitle: "Relationship Status: It's Complicated",
-				description: "Time to download dating apps... again.",
-				emoji: "💀"
-			};
-		}
+	function startGame() {
+		quizStore.startGame();
 	}
 	
 	function restart() {
-		currentQuestion = 0;
-		anger = 0;
-		gameState = 'playing';
-		selectedAnswer = null;
-		showReaction = false;
-		finalResult = '';
+		quizStore.reset();
+		startGame();
 	}
 	
 	function shareResult() {
-		// Simple share - in real app would use html-to-image
-		// @ts-ignore
-		const text = `I survived The BF/GF Trials with ${anger}% anger! ${finalResult.title} Can you do better? #DragonSurvivor`;
+		const text = `${$finalResult.share} Can you do better? #DragonSurvivor #LoveSurvivalKit`;
 		
 		if (navigator.share) {
 			navigator.share({
@@ -141,11 +68,23 @@
 				url: window.location.href
 			});
 		} else {
-			// Fallback - copy to clipboard
 			navigator.clipboard.writeText(text);
 			alert('Result copied to clipboard! Share your survival story! 📋');
 		}
 	}
+	
+	onMount(() => {
+		// Start fresh
+		quizStore.reset();
+	});
+	
+	onDestroy(() => {
+		// Clean up timer
+		// @ts-ignore
+		if (autoAdvanceTimer) {
+			clearTimeout(autoAdvanceTimer);
+		}
+	});
 </script>
 
 <div class="quiz-container" class:shake={shakeScreen}>
@@ -155,55 +94,83 @@
 		<p>Can you keep her anger below 100%? (Spoiler: No)</p>
 	</header>
 	
-	{#if gameState !== 'finished'}
+	{#if gameState === 'ready'}
+		<div class="start-screen" in:fade={{ duration: 300 }}>
+			<div class="start-content">
+				<div class="start-emoji">🎮</div>
+				<h2>Ready to Test Your Survival Skills?</h2>
+				<p>You'll face 10 random relationship questions.</p>
+				<p>Every answer increases her anger.</p>
+				<p>There are no right answers. Only survival.</p>
+				<button class="start-button" on:click={startGame}>
+					Start The Trials
+				</button>
+			</div>
+		</div>
+	{:else if gameState === 'playing' || gameState === 'reaction'}
 		<!-- Progress Bar -->
-		<div class="progress-container">
-			<div class="progress-bar" style="width: {progress}%"></div>
-			<span class="progress-text">Question {currentQuestion + 1} of {questions.length}</span>
+		<div class="progress-container" in:fade={{ duration: 300 }}>
+			<div class="progress-bar" style="width: {$progress}%"></div>
+			<span class="progress-text">Question {currentQuestionIndex + 1} of 10</span>
 		</div>
 		
 		<!-- Anger Meter -->
-		<AngerMeter {anger} shake={shakeScreen} />
+		<div in:fly={{ y: -20, duration: 300 }}>
+			<AngerMeter {anger} shake={shakeScreen} />
+		</div>
 		
 		<!-- Question -->
-		<div class="question-card">
-			<h2 class="question-text">{currentQ.question}</h2>
-			
-			<div class="answers-grid">
-				{#each currentQ.answers as answer}
-					<button 
-						class="answer-button"
-						class:selected={selectedAnswer === answer}
-						class:disabled={gameState === 'reaction'}
-						on:click={() => selectAnswer(answer)}
-						disabled={gameState === 'reaction'}
-					>
-						{answer.text}
-					</button>
-				{/each}
-			</div>
-			
-			{#if showReaction && selectedAnswer}
-				<div class="reaction-box" class:game-over={anger >= 100}>
-					<div class="anger-change">+{selectedAnswer.anger}% Anger!</div>
-					<p>{selectedAnswer.reaction}</p>
-					{#if anger >= 100}
-						<p class="game-over-text">💔 CRITICAL RELATIONSHIP FAILURE! 💔</p>
+		{#if $currentQuestion}
+			{#key currentQuestionIndex}
+				<div class="question-card" in:fly={{ x: 50, duration: 200 }} out:fly={{ x: -50, duration: 150 }}>
+					<h2 class="question-text">{$currentQuestion.question}</h2>
+					
+					<div class="answers-grid">
+						{#each $currentQuestion.answers as answer, i}
+							<button 
+								class="answer-button"
+								class:selected={selectedAnswer === answer}
+								class:disabled={gameState === 'reaction'}
+								on:click={() => handleAnswerSelect(answer)}
+								disabled={gameState === 'reaction' || transitioning}
+								in:fly={{ y: 10, duration: 150, delay: i * 30 }}
+							>
+								{answer.text}
+							</button>
+						{/each}
+					</div>
+					
+					{#if showReaction && selectedAnswer}
+						<div 
+							class="reaction-box" 
+							class:game-over={anger >= 100}
+							in:scale={{ duration: 200, start: 0.9 }}
+						>
+							<div class="anger-change">+{selectedAnswer.anger}% Anger!</div>
+							<p>{selectedAnswer.reaction}</p>
+							{#if anger >= 100}
+								<p class="game-over-text">💔 CRITICAL RELATIONSHIP FAILURE! 💔</p>
+							{/if}
+						</div>
 					{/if}
 				</div>
-			{/if}
-		</div>
-	{:else}
+			{/key}
+		{/if}
+	{:else if gameState === 'finished'}
 		<!-- Game Over Screen -->
-		<div class="result-screen">
-			<div class="result-emoji">{finalResult.emoji}</div>
+		<div class="result-screen" in:fade={{ duration: 500 }}>
+			<div class="result-emoji" in:scale={{ duration: 600, start: 0 }}>
+				{$finalResult.emoji}
+			</div>
 			
-			<AngerMeter {anger} />
+			<div in:fly={{ y: 20, duration: 400, delay: 200 }}>
+				<AngerMeter {anger} />
+			</div>
 			
-			<div class="result-content">
-				<h2>{finalResult.title}</h2>
-				<h3>{finalResult.subtitle}</h3>
-				<p>{finalResult.description}</p>
+			<div class="result-content" in:fly={{ y: 20, duration: 400, delay: 400 }}>
+				<h2>{$finalResult.title}</h2>
+				<h3>{$finalResult.subtitle}</h3>
+				<p>{$finalResult.description}</p>
 				
 				<div class="final-stats">
 					<div class="stat">
@@ -211,8 +178,8 @@
 						<span class="stat-value">{anger}%</span>
 					</div>
 					<div class="stat">
-						<span class="stat-label">Survival Rate:</span>
-						<span class="stat-value">{100 - anger}%</span>
+						<span class="stat-label">Questions Survived:</span>
+						<span class="stat-value">{$quizStore.questionsAnswered}/10</span>
 					</div>
 				</div>
 				
@@ -221,7 +188,7 @@
 						📱 Share Your Survival Story #DragonSurvivor
 					</button>
 					<button class="restart-button" on:click={restart}>
-						🔄 Try Again
+						🔄 Try Again (You Masochist)
 					</button>
 				</div>
 			</div>
@@ -280,6 +247,58 @@
 		opacity: 0.9;
 	}
 	
+	/* Start Screen */
+	.start-screen {
+		max-width: 600px;
+		margin: 4rem auto;
+		text-align: center;
+	}
+	
+	.start-content {
+		background: white;
+		border-radius: 12px;
+		padding: 3rem;
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+	}
+	
+	.start-emoji {
+		font-size: 4rem;
+		margin-bottom: 1rem;
+		animation: bounce 2s ease-in-out infinite;
+	}
+	
+	.start-content h2 {
+		color: #333;
+		margin-bottom: 1rem;
+		font-size: 1.8rem;
+	}
+	
+	.start-content p {
+		color: #666;
+		margin-bottom: 1rem;
+		font-size: 1.1rem;
+	}
+	
+	.start-button {
+		background: #764ba2;
+		color: white;
+		border: none;
+		border-radius: 8px;
+		padding: 1rem 2.5rem;
+		font-size: 1.2rem;
+		font-weight: bold;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		margin-top: 1rem;
+	}
+	
+	.start-button:hover {
+		background: #5a3a7e;
+		transform: translateY(-2px);
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	}
+	
+	/* Progress */
 	.progress-container {
 		max-width: 800px;
 		margin: 0 auto 1rem;
@@ -308,6 +327,7 @@
 		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
 	}
 	
+	/* Question Card */
 	.question-card {
 		max-width: 800px;
 		margin: 0 auto;
@@ -337,9 +357,11 @@
 		padding: 1rem 1.5rem;
 		font-size: 1.1rem;
 		cursor: pointer;
-		transition: all 0.2s ease;
+		transition: all 0.15s ease;
 		text-align: left;
 		color: #333;
+		transform-origin: center;
+		will-change: transform;
 	}
 	
 	.answer-button:hover:not(.disabled) {
@@ -353,13 +375,15 @@
 		background: #764ba2;
 		color: white;
 		border-color: #764ba2;
+		transform: scale(0.98);
 	}
 	
-	.answer-button.disabled {
+	.answer-button.disabled:not(.selected) {
 		cursor: not-allowed;
-		opacity: 0.6;
+		opacity: 0.5;
 	}
 	
+	/* Reaction Box */
 	.reaction-box {
 		margin-top: 1rem;
 		padding: 1rem;
@@ -367,23 +391,11 @@
 		border: 2px solid #ffeeba;
 		border-radius: 8px;
 		text-align: center;
-		animation: slideIn 0.3s ease;
 	}
 	
 	.reaction-box.game-over {
 		background: #f8d7da;
 		border-color: #f5c6cb;
-	}
-	
-	@keyframes slideIn {
-		from {
-			opacity: 0;
-			transform: translateY(-10px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
 	}
 	
 	.anger-change {
@@ -549,4 +561,4 @@
 			padding: 0.75rem 1.5rem;
 		}
 	}
-</style>    
+</style>
