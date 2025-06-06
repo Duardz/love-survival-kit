@@ -221,7 +221,7 @@
 						📱 Share Your Survival Story #DragonSurvivor
 					</button>
 					<button class="restart-button" on:click={restart}>
-						🔄 Try Again (You Masochist)
+						🔄 Try Again
 					</button>
 				</div>
 			</div>

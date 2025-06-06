@@ -17,8 +17,8 @@ export const questions = [
 			},
 			{
 				text: "I'll give you some space.",
-				anger: 25,
-				reaction: "Space? SPACE?! So you don't want to talk to her? 😤"
+				anger: 10,
+				reaction: "She appreciates the space… but still annoyed you didn’t insist. 😶"
 			},
 			{
 				text: "*Start apologizing for everything*",
@@ -33,23 +33,23 @@ export const questions = [
 		answers: [
 			{
 				text: "No, you look amazing!",
-				anger: 15,
-				reaction: "That was too fast. You didn't even look properly! 😠"
+				anger: 10,
+				reaction: "A bit too quick to answer, but still sweet. 😊"
 			},
 			{
 				text: "You look beautiful in everything.",
-				anger: 20,
-				reaction: "That's not what she asked. Stop avoiding the question! 🙄"
+				anger: 5,
+				reaction: "Generic... but smooth. She’ll let it pass. 😏"
 			},
 			{
 				text: "Maybe try the other dress?",
-				anger: 40,
+				anger: 35,
 				reaction: "So she DOES look fat? Thanks a lot! 😭😡"
 			},
 			{
 				text: "*Pretend to faint*",
-				anger: 30,
-				reaction: "Really? REALLY?! Drama queen. 🎭"
+				anger: 20,
+				reaction: "She laughed... but you're still not off the hook. 🎭"
 			}
 		]
 	},
@@ -59,23 +59,23 @@ export const questions = [
 		answers: [
 			{
 				text: "You are, obviously!",
-				anger: 15,
-				reaction: "That's not what she asked. Nice try though. 😏"
+				anger: 5,
+				reaction: "Safe answer. Too safe. But she'll take it. 💅"
 			},
 			{
-				text: "I don't really notice other women.",
-				anger: 25,
-				reaction: "LIAR! You noticed the waitress last week! 🤥"
+				text: "I don’t really notice other women.",
+				anger: 10,
+				reaction: "She’s raising an eyebrow but letting it slide. 👀"
 			},
 			{
 				text: "Sarah, I guess?",
-				anger: 45,
-				reaction: "SARAH?! Really?! *mentally planning your funeral* 💀"
+				anger: 40,
+				reaction: "SARAH?! You chose violence. 💀"
 			},
 			{
 				text: "This feels like a trap...",
-				anger: 20,
-				reaction: "Everything's a trap to you? How romantic. 😒"
+				anger: 15,
+				reaction: "You're not wrong. But still suspicious. 😒"
 			}
 		]
 	},
@@ -86,22 +86,22 @@ export const questions = [
 			{
 				text: "Tuesday?",
 				anger: 35,
-				reaction: "It's our anniversary. Start running. 🏃‍♂️💨"
+				reaction: "It’s our anniversary. Start running. 🏃‍♂️💨"
 			},
 			{
 				text: "The most special day ever!",
-				anger: 20,
-				reaction: "Which special day? Be specific! 📅"
+				anger: 10,
+				reaction: "Cute answer. Buying time, aren't you? 🎈"
 			},
 			{
 				text: "Our anniversary! *sweating*",
-				anger: 15,
-				reaction: "Lucky guess. Where's my gift then? 🎁"
+				anger: 5,
+				reaction: "Correct… but why the panic? 🕵️‍♀️"
 			},
 			{
 				text: "The day I tell you how much I love you?",
-				anger: 25,
-				reaction: "Smooth talker. You forgot, didn't you? 🙄"
+				anger: 15,
+				reaction: "Corny. But it kinda worked. 😌"
 			}
 		]
 	},
@@ -111,23 +111,23 @@ export const questions = [
 		answers: [
 			{
 				text: "How much you love me?",
-				anger: 20,
-				reaction: "Wrong. She's thinking about that thing you did 3 months ago. 📝"
+				anger: 10,
+				reaction: "She smiled a little. You're safe. 🥹"
 			},
 			{
 				text: "Where to eat tonight?",
-				anger: 15,
-				reaction: "No, but now that you mention it, where ARE we eating? 🍽️"
+				anger: 5,
+				reaction: "Accidentally won. Now she’s hungry. 🍕"
 			},
 			{
 				text: "I have no idea, tell me!",
-				anger: 30,
-				reaction: "You never understand her. *sigh* 😔"
+				anger: 20,
+				reaction: "She wants you to know without asking! 😤"
 			},
 			{
 				text: "That thing I forgot to do?",
-				anger: 25,
-				reaction: "WHAT thing?! What did you forget?! 😡"
+				anger: 30,
+				reaction: "WAIT WHAT THING?! Suspicion level: critical. 🚨"
 			}
 		]
 	},
@@ -137,23 +137,23 @@ export const questions = [
 		answers: [
 			{
 				text: "She's great! We're having fun!",
-				anger: 20,
-				reaction: "Why did you answer?! That was HER mom! 📱"
+				anger: 5,
+				reaction: "Solid answer. No notes. ☎️"
 			},
 			{
 				text: "*Hand her the phone immediately*",
-				anger: 15,
-				reaction: "At least you know your place. 🤷‍♀️"
+				anger: 0,
+				reaction: "Smart man. Safe move. 🧠"
 			},
 			{
 				text: "She's in the bathroom.",
-				anger: 30,
-				reaction: "TMI! Why would you tell her mom that?! 🚽"
+				anger: 15,
+				reaction: "She didn’t need that info... but okay. 🚽"
 			},
 			{
 				text: "*Panic and hang up*",
 				anger: 40,
-				reaction: "You hung up on her MOTHER?! 😱"
+				reaction: "You HUNG UP on her mom?! You’re doomed. 💀"
 			}
 		]
 	},
@@ -163,23 +163,23 @@ export const questions = [
 		answers: [
 			{
 				text: "Are you okay?",
-				anger: 25,
-				reaction: "She WAS okay. Now she's annoyed. 😤"
+				anger: 10,
+				reaction: "Good effort. Still suspicious. 🤨"
 			},
 			{
 				text: "*Stay quiet too*",
-				anger: 30,
-				reaction: "Oh, so you're giving her the silent treatment now? 🤐"
+				anger: 25,
+				reaction: "Silent competition? She always wins. 🤐"
 			},
 			{
 				text: "I love you",
-				anger: 15,
-				reaction: "Trying to butter her up? She sees through you. 🧈"
+				anger: 5,
+				reaction: "Aww. She’s softening. ❤️"
 			},
 			{
 				text: "Want to talk about it?",
-				anger: 20,
-				reaction: "Talk about WHAT? Nothing's wrong! (Everything's wrong) 🙃"
+				anger: 15,
+				reaction: "She says no. Means yes. Proceed carefully. 🫣"
 			}
 		]
 	},
@@ -189,23 +189,23 @@ export const questions = [
 		answers: [
 			{
 				text: "The left one",
-				anger: 25,
-				reaction: "What's wrong with the right one?! 🤳"
+				anger: 20,
+				reaction: "So the right one is ugly?! 🤳"
 			},
 			{
 				text: "They're both perfect!",
-				anger: 20,
-				reaction: "You're not even trying to help! Look closer! 👀"
+				anger: 10,
+				reaction: "You're not wrong. But pick one. 😐"
 			},
 			{
 				text: "The one where you're smiling more",
-				anger: 15,
-				reaction: "She's smiling the same amount in both! Pay attention! 😊"
+				anger: 5,
+				reaction: "Safe, specific, and sweet. 😌"
 			},
 			{
 				text: "*Analyze for 5 minutes*",
-				anger: 30,
-				reaction: "It's not that serious! Just pick one! ⏰"
+				anger: 15,
+				reaction: "She appreciates the effort. But why so dramatic? ⏰"
 			}
 		]
 	},
@@ -215,23 +215,23 @@ export const questions = [
 		answers: [
 			{
 				text: "Sorry I'm late!",
-				anger: 15,
-				reaction: "Only sorry because you got caught. ⏱️"
+				anger: 5,
+				reaction: "Simple, honest. She nods quietly. 🕊️"
 			},
 			{
 				text: "Traffic was crazy!",
-				anger: 25,
-				reaction: "There's always an excuse, isn't there? 🚗"
+				anger: 15,
+				reaction: "Excuses, excuses. 🚦"
 			},
 			{
 				text: "You look beautiful!",
-				anger: 30,
-				reaction: "Changing the subject? She noticed. 💅"
+				anger: 10,
+				reaction: "Compliment distraction... borderline genius. 😏"
 			},
 			{
 				text: "*Act like nothing happened*",
-				anger: 35,
-				reaction: "Oh, so being on time doesn't matter to you? 😤"
+				anger: 30,
+				reaction: "Bold move. Wrong move. 😤"
 			}
 		]
 	},
@@ -241,23 +241,23 @@ export const questions = [
 		answers: [
 			{
 				text: "About what? *nervous*",
-				anger: 20,
-				reaction: "If you don't know, that's the problem! 😠"
+				anger: 15,
+				reaction: "Nervous? You *should* be. 😠"
 			},
 			{
 				text: "I'm sorry for whatever I did!",
-				anger: 25,
-				reaction: "So you DID do something! What was it?! 🕵️‍♀️"
+				anger: 10,
+				reaction: "Apology speedrun. Not bad. 🫡"
 			},
 			{
 				text: "Okay, I'm listening.",
-				anger: 10,
-				reaction: "Finally, some maturity. Still mad though. 😌"
+				anger: 0,
+				reaction: "Perfect. She might not yell now. 🫶"
 			},
 			{
 				text: "*Check your phone for escape routes*",
-				anger: 40,
-				reaction: "Put. The. Phone. DOWN! 📱💢"
+				anger: 35,
+				reaction: "Caught red-handed. You're toast. 🍞"
 			}
 		]
 	}
