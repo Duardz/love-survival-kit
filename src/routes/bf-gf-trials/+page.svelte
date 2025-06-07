@@ -185,7 +185,7 @@
 										class:critical={anger >= 100}
 										in:scale={{ duration: 200, start: 0.9 }}
 									>
-										<div class="reaction-anger">+{selectedAnswer.anger}% Anger</div>
+										<div class="reaction-anger">{selectedAnswer.anger}% Anger</div>
 										<div class="reaction-text">{selectedAnswer.reaction}</div>
 										{#if anger >= 100}
 											<div class="game-over-alert">💔 RELATIONSHIP CRITICAL! 💔</div>
