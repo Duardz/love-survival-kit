@@ -1,23 +1,23 @@
 <!-- src/routes/bf-gf-trials/+page.svelte -->
 <script>
 // @ts-nocheck
-
 	import { onMount, onDestroy } from 'svelte';
 	import { fade, fly, scale } from 'svelte/transition';
 	import AngerMeter from '$lib/components/AngerMeter.svelte';
+	import QuizPreloader from '$lib/components/QuizPreloader.svelte';
 	import { quizStore, currentQuestion, progress, finalResult } from '$lib/stores/quiz.js';
 	
 	let shakeScreen = false;
 	let transitioning = false;
-	// @ts-ignore
+	let isReady = false;
+	let showFoodEffect = false;
 	let autoAdvanceTimer;
 	
 	// Subscribe to store
-	$: ({ anger, gameState, selectedAnswer, showReaction, currentQuestionIndex } = $quizStore);
+	$: ({ anger, gameState, selectedAnswer, showReaction, currentQuestionIndex, foodPowerUps, lastFoodEffect } = $quizStore);
 	
 	// Watch for anger changes to trigger shake
-// @ts-ignore
-		$: if (selectedAnswer && selectedAnswer.anger >= 30) {
+	$: if (selectedAnswer && selectedAnswer.anger >= 30) {
 		triggerShake();
 	}
 	
@@ -26,13 +26,12 @@
 		setTimeout(() => shakeScreen = false, 500);
 	}
 	
-	// @ts-ignore
 	function handleAnswerSelect(answer) {
 		if (transitioning || gameState !== 'playing') return;
 		
 		quizStore.selectAnswer(answer);
 		
-		// Auto advance after showing reaction - faster timing
+		// Auto advance after showing reaction
 		const delay = anger >= 100 ? 1500 : 1800;
 		autoAdvanceTimer = setTimeout(() => {
 			handleNextQuestion();
@@ -43,10 +42,20 @@
 		transitioning = true;
 		quizStore.nextQuestion();
 		
-		// Reset transitioning flag quickly
 		setTimeout(() => {
 			transitioning = false;
 		}, 150);
+	}
+	
+	function useFoodPowerUp() {
+		if (foodPowerUps <= 0 || gameState !== 'playing') return;
+		
+		quizStore.useFoodPowerUp();
+		showFoodEffect = true;
+		
+		setTimeout(() => {
+			showFoodEffect = false;
+		}, 2000);
 	}
 	
 	function startGame() {
@@ -74,366 +83,515 @@
 	}
 	
 	onMount(() => {
-		// Start fresh
 		quizStore.reset();
 	});
 	
 	onDestroy(() => {
-		// Clean up timer
-		// @ts-ignore
 		if (autoAdvanceTimer) {
 			clearTimeout(autoAdvanceTimer);
 		}
 	});
 </script>
 
-<div class="quiz-container" class:shake={shakeScreen}>
-	<header class="quiz-header">
-		<a href="/" class="back-button">← Back to Survival Kit</a>
-		<h1>The BF/GF Trials</h1>
-		<p>Can you keep her anger below 100%? (Spoiler: No)</p>
-	</header>
-	
-	{#if gameState === 'ready'}
-		<div class="start-screen" in:fade={{ duration: 300 }}>
-			<div class="start-content">
-				<div class="start-emoji">🎮</div>
-				<h2>Ready to Test Your Survival Skills?</h2>
-				<p>You'll face 10 random relationship questions.</p>
-				<p>Every answer increases her anger.</p>
-				<p>There are no right answers. Only survival.</p>
-				<button class="start-button" on:click={startGame}>
-					Start The Trials
-				</button>
+<QuizPreloader onReady={() => isReady = true} />
+
+{#if isReady}
+	<div class="quiz-page" class:shake={shakeScreen}>
+		<!-- Fixed Header -->
+		<header class="quiz-header">
+			<div class="header-content">
+				<a href="/" class="back-link">
+					<span class="back-icon">←</span>
+					<span class="hide-mobile">Back to Kit</span>
+				</a>
+				<h1 class="quiz-title">The BF/GF Trials</h1>
+				<div class="header-spacer"></div>
 			</div>
-		</div>
-	{:else if gameState === 'playing' || gameState === 'reaction'}
-		<!-- Progress Bar -->
-		<div class="progress-container" in:fade={{ duration: 300 }}>
-			<div class="progress-bar" style="width: {$progress}%"></div>
-			<span class="progress-text">Question {currentQuestionIndex + 1} of 10</span>
-		</div>
+		</header>
 		
-		<!-- Anger Meter -->
-		<div in:fly={{ y: -20, duration: 300 }}>
-			<AngerMeter {anger} shake={shakeScreen} />
-		</div>
-		
-		<!-- Question -->
-		{#if $currentQuestion}
-			{#key currentQuestionIndex}
-				<div class="question-card" in:fly={{ x: 50, duration: 200 }} out:fly={{ x: -50, duration: 150 }}>
-					<h2 class="question-text">{$currentQuestion.question}</h2>
-					
-					<div class="answers-grid">
-						{#each $currentQuestion.answers as answer, i}
-							<button 
-								class="answer-button"
-								class:selected={selectedAnswer === answer}
-								class:disabled={gameState === 'reaction'}
-								on:click={() => handleAnswerSelect(answer)}
-								disabled={gameState === 'reaction' || transitioning}
-								in:fly={{ y: 10, duration: 150, delay: i * 30 }}
-							>
-								{answer.text}
-							</button>
-						{/each}
+		<div class="quiz-container">
+			{#if gameState === 'ready'}
+				<!-- Start Screen -->
+				<div class="start-screen" in:fade={{ duration: 300 }}>
+					<div class="card start-card">
+						<div class="start-icon">🎮</div>
+						<h2>Ready to Test Your Survival Skills?</h2>
+						<div class="start-info">
+							<p>📋 10 random relationship questions</p>
+							<p>😤 Every answer increases her anger</p>
+							<p>🍔 Use food to calm her down (2 available)</p>
+							<p>💔 Game ends at 100% anger</p>
+						</div>
+						<button class="btn btn-primary btn-lg" on:click={startGame}>
+							Start The Trials
+						</button>
+					</div>
+				</div>
+				
+			{:else if gameState === 'playing' || gameState === 'reaction'}
+				<!-- Game Screen -->
+				<div class="game-screen">
+					<!-- Progress Section -->
+					<div class="progress-section">
+						<div class="progress-info">
+							<span>Question {currentQuestionIndex + 1} of 10</span>
+							<span class="text-secondary">{10 - currentQuestionIndex - 1} remaining</span>
+						</div>
+						<div class="progress-bar-container">
+							<div class="progress-bar-fill" style="width: {$progress}%"></div>
+						</div>
 					</div>
 					
-					{#if showReaction && selectedAnswer}
-						<div 
-							class="reaction-box" 
-							class:game-over={anger >= 100}
-							in:scale={{ duration: 200, start: 0.9 }}
-						>
-							<div class="anger-change">+{selectedAnswer.anger}% Anger!</div>
-							<p>{selectedAnswer.reaction}</p>
-							{#if anger >= 100}
-								<p class="game-over-text">💔 CRITICAL RELATIONSHIP FAILURE! 💔</p>
-							{/if}
+					<!-- Anger Meter Section -->
+					<div class="meter-section">
+						<AngerMeter {anger} shake={shakeScreen} />
+						
+						<!-- Food Power-up -->
+						<div class="power-up-section">
+							<button 
+								class="power-up-btn" 
+								class:disabled={foodPowerUps === 0}
+								on:click={useFoodPowerUp}
+								disabled={foodPowerUps === 0 || gameState !== 'playing'}
+							>
+								<span class="power-up-icon">🍔</span>
+								<span class="power-up-count">{foodPowerUps}</span>
+							</button>
+							<div class="power-up-label">Emergency Food</div>
 						</div>
+						
+						{#if showFoodEffect && lastFoodEffect > 0}
+							<div class="food-effect" in:scale={{ duration: 300 }}>
+								-{lastFoodEffect}% Anger! She's slightly calmer... 🍔
+							</div>
+						{/if}
+					</div>
+					
+					<!-- Question Card -->
+					{#if $currentQuestion}
+						{#key currentQuestionIndex}
+							<div class="question-section" in:fly={{ x: 30, duration: 200 }} out:fly={{ x: -30, duration: 150 }}>
+								<div class="card question-card">
+									<h2 class="question-text">{$currentQuestion.question}</h2>
+									
+									<div class="answers-container">
+										{#each $currentQuestion.answers as answer, i}
+											<button 
+												class="answer-btn"
+												class:selected={selectedAnswer === answer}
+												class:disabled={gameState === 'reaction'}
+												on:click={() => handleAnswerSelect(answer)}
+												disabled={gameState === 'reaction' || transitioning}
+												in:fly={{ y: 10, duration: 150, delay: i * 30 }}
+											>
+												{answer.text}
+											</button>
+										{/each}
+									</div>
+									
+									{#if showReaction && selectedAnswer}
+										<div 
+											class="reaction-section" 
+											class:danger={anger >= 100}
+											in:scale={{ duration: 200, start: 0.9 }}
+										>
+											<div class="anger-increase">+{selectedAnswer.anger}% Anger!</div>
+											<p class="reaction-text">{selectedAnswer.reaction}</p>
+											{#if anger >= 100}
+												<p class="game-over-text">💔 RELATIONSHIP CRITICAL FAILURE! 💔</p>
+											{/if}
+										</div>
+									{/if}
+								</div>
+							</div>
+						{/key}
 					{/if}
 				</div>
-			{/key}
-		{/if}
-	{:else if gameState === 'finished'}
-		<!-- Game Over Screen -->
-		<div class="result-screen" in:fade={{ duration: 500 }}>
-			<div class="result-emoji" in:scale={{ duration: 600, start: 0 }}>
-				{$finalResult.emoji}
-			</div>
-			
-			<div in:fly={{ y: 20, duration: 400, delay: 200 }}>
-				<AngerMeter {anger} />
-			</div>
-			
-			<div class="result-content" in:fly={{ y: 20, duration: 400, delay: 400 }}>
-				<h2>{$finalResult.title}</h2>
-				<h3>{$finalResult.subtitle}</h3>
-				<p>{$finalResult.description}</p>
 				
-				<div class="final-stats">
-					<div class="stat">
-						<span class="stat-label">Final Anger:</span>
-						<span class="stat-value">{anger}%</span>
+			{:else if gameState === 'finished'}
+				<!-- Results Screen -->
+				<div class="results-screen" in:fade={{ duration: 500 }}>
+					<div class="result-emoji" in:scale={{ duration: 600, start: 0 }}>
+						{$finalResult.emoji}
 					</div>
-					<div class="stat">
-						<span class="stat-label">Questions Survived:</span>
-						<span class="stat-value">{$quizStore.questionsAnswered}/10</span>
+					
+					<div class="card result-card" in:fly={{ y: 20, duration: 400, delay: 200 }}>
+						<h2 class="result-title">{$finalResult.title}</h2>
+						<h3 class="result-subtitle">{$finalResult.subtitle}</h3>
+						<p class="result-description">{$finalResult.description}</p>
+						
+						<div class="stats-grid">
+							<div class="stat-item">
+								<div class="stat-value">{anger}%</div>
+								<div class="stat-label">Final Anger</div>
+							</div>
+							<div class="stat-item">
+								<div class="stat-value">{$quizStore.questionsAnswered}</div>
+								<div class="stat-label">Questions Survived</div>
+							</div>
+							<div class="stat-item">
+								<div class="stat-value">{2 - foodPowerUps}</div>
+								<div class="stat-label">Food Used</div>
+							</div>
+						</div>
+						
+						<div class="result-actions">
+							<button class="btn btn-success btn-lg" on:click={shareResult}>
+								📱 Share Result
+							</button>
+							<button class="btn btn-primary btn-lg" on:click={restart}>
+								🔄 Try Again
+							</button>
+						</div>
+					</div>
+					
+					<div in:fly={{ y: 20, duration: 400, delay: 400 }}>
+						<AngerMeter {anger} />
 					</div>
 				</div>
-				
-				<div class="action-buttons">
-					<button class="share-button" on:click={shareResult}>
-						📱 Share Your Survival Story #DragonSurvivor
-					</button>
-					<button class="restart-button" on:click={restart}>
-						🔄 Try Again (You Masochist)
-					</button>
-				</div>
-			</div>
+			{/if}
 		</div>
-	{/if}
-</div>
+	</div>
+{/if}
 
 <style>
-	.quiz-container {
+	.quiz-page {
 		min-height: 100vh;
-		background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-		padding: 1rem;
+		background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
+		position: relative;
+		overflow-x: hidden;
 	}
 	
-	.quiz-container.shake {
-		animation: screenShake 0.5s ease-in-out;
+	.quiz-page.shake {
+		animation: shake 0.5s ease-in-out;
 	}
 	
-	@keyframes screenShake {
-		0%, 100% { transform: translateX(0); }
-		10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
-		20%, 40%, 60%, 80% { transform: translateX(5px); }
-	}
-	
+	/* Header */
 	.quiz-header {
-		text-align: center;
-		color: white;
-		margin-bottom: 2rem;
-		max-width: 800px;
-		margin-left: auto;
-		margin-right: auto;
+		position: sticky;
+		top: 0;
+		z-index: 100;
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(10px);
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 	}
 	
-	.back-button {
+	.header-content {
+		max-width: 1200px;
+		margin: 0 auto;
+		padding: 1rem;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+	
+	.back-link {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
 		color: white;
-		text-decoration: none;
-		font-size: 0.9rem;
-		opacity: 0.8;
+		font-weight: 500;
 		transition: opacity 0.2s;
-		display: inline-block;
-		margin-bottom: 1rem;
 	}
 	
-	.back-button:hover {
-		opacity: 1;
+	.back-link:hover {
+		opacity: 0.8;
 	}
 	
-	.quiz-header h1 {
-		font-size: 2.5rem;
-		margin: 0 0 0.5rem 0;
-		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+	.back-icon {
+		font-size: 1.25rem;
 	}
 	
-	.quiz-header p {
-		font-size: 1.1rem;
-		opacity: 0.9;
+	.quiz-title {
+		font-size: 1.5rem;
+		color: white;
+		margin: 0;
+		text-align: center;
+		flex: 1;
+	}
+	
+	.header-spacer {
+		width: 100px;
+	}
+	
+	/* Container */
+	.quiz-container {
+		max-width: 800px;
+		margin: 0 auto;
+		padding: 2rem 1rem;
+		min-height: calc(100vh - 80px);
 	}
 	
 	/* Start Screen */
 	.start-screen {
-		max-width: 600px;
-		margin: 4rem auto;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-height: calc(100vh - 160px);
+	}
+	
+	.start-card {
 		text-align: center;
-	}
-	
-	.start-content {
-		background: white;
-		border-radius: 12px;
 		padding: 3rem;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		max-width: 500px;
+		width: 100%;
 	}
 	
-	.start-emoji {
+	.start-icon {
 		font-size: 4rem;
-		margin-bottom: 1rem;
-		animation: bounce 2s ease-in-out infinite;
+		margin-bottom: 1.5rem;
+		animation: pulse 2s ease-in-out infinite;
 	}
 	
-	.start-content h2 {
-		color: #333;
-		margin-bottom: 1rem;
-		font-size: 1.8rem;
+	.start-card h2 {
+		color: var(--text-primary);
+		margin-bottom: 2rem;
 	}
 	
-	.start-content p {
-		color: #666;
-		margin-bottom: 1rem;
-		font-size: 1.1rem;
+	.start-info {
+		text-align: left;
+		background: var(--bg-tertiary);
+		border-radius: var(--radius);
+		padding: 1.5rem;
+		margin-bottom: 2rem;
 	}
 	
-	.start-button {
-		background: #764ba2;
-		color: white;
-		border: none;
-		border-radius: 8px;
-		padding: 1rem 2.5rem;
-		font-size: 1.2rem;
-		font-weight: bold;
-		cursor: pointer;
-		transition: all 0.2s ease;
-		margin-top: 1rem;
+	.start-info p {
+		margin: 0.5rem 0;
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		color: var(--text-primary);
 	}
 	
-	.start-button:hover {
-		background: #5a3a7e;
-		transform: translateY(-2px);
-		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	/* Game Screen */
+	.game-screen {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
 	}
 	
-	/* Progress */
-	.progress-container {
-		max-width: 800px;
-		margin: 0 auto 1rem;
-		background: rgba(255, 255, 255, 0.2);
-		border-radius: 10px;
-		height: 30px;
-		position: relative;
+	/* Progress Section */
+	.progress-section {
+		background: rgba(255, 255, 255, 0.95);
+		border-radius: var(--radius-lg);
+		padding: 1rem;
+		box-shadow: var(--shadow);
+	}
+	
+	.progress-info {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 0.75rem;
+		font-weight: 500;
+		color: var(--text-primary);
+	}
+	
+	.progress-bar-container {
+		height: 8px;
+		background: var(--bg-tertiary);
+		border-radius: var(--radius-full);
 		overflow: hidden;
 	}
 	
-	.progress-bar {
+	.progress-bar-fill {
 		height: 100%;
-		background: linear-gradient(90deg, #28a745, #20c997);
+		background: linear-gradient(90deg, var(--success), var(--success-dark));
 		transition: width 0.5s ease;
-		border-radius: 10px;
+		border-radius: var(--radius-full);
 	}
 	
-	.progress-text {
-		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		color: white;
-		font-weight: bold;
-		font-size: 0.9rem;
-		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+	/* Meter Section */
+	.meter-section {
+		position: relative;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
 	}
 	
-	/* Question Card */
-	.question-card {
-		max-width: 800px;
-		margin: 0 auto;
+	/* Power-up Section */
+	.power-up-section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.25rem;
+	}
+	
+	.power-up-btn {
+		position: relative;
+		width: 60px;
+		height: 60px;
+		border-radius: var(--radius-full);
 		background: white;
-		border-radius: 12px;
+		border: 3px solid var(--primary);
+		cursor: pointer;
+		transition: all 0.2s;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: var(--shadow);
+	}
+	
+	.power-up-btn:hover:not(.disabled) {
+		transform: scale(1.1);
+		box-shadow: var(--shadow-md);
+	}
+	
+	.power-up-btn:active:not(.disabled) {
+		transform: scale(0.95);
+	}
+	
+	.power-up-btn.disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+		border-color: var(--text-light);
+	}
+	
+	.power-up-icon {
+		font-size: 1.75rem;
+	}
+	
+	.power-up-count {
+		position: absolute;
+		top: -5px;
+		right: -5px;
+		background: var(--danger);
+		color: white;
+		width: 24px;
+		height: 24px;
+		border-radius: var(--radius-full);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 0.875rem;
+		font-weight: bold;
+	}
+	
+	.power-up-label {
+		font-size: 0.75rem;
+		color: white;
+		font-weight: 500;
+		text-align: center;
+	}
+	
+	.food-effect {
+		position: absolute;
+		top: -40px;
+		left: 50%;
+		transform: translateX(-50%);
+		background: var(--success);
+		color: white;
+		padding: 0.5rem 1rem;
+		border-radius: var(--radius-full);
+		font-weight: bold;
+		white-space: nowrap;
+		box-shadow: var(--shadow);
+	}
+	
+	/* Question Section */
+	.question-section {
+		flex: 1;
+	}
+	
+	.question-card {
 		padding: 2rem;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	}
 	
 	.question-text {
 		font-size: 1.5rem;
-		color: #333;
-		margin-bottom: 2rem;
+		color: var(--text-primary);
 		text-align: center;
+		margin-bottom: 2rem;
+		line-height: 1.4;
 	}
 	
-	.answers-grid {
-		display: grid;
-		gap: 1rem;
-		margin-bottom: 1rem;
+	.answers-container {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
 	}
 	
-	.answer-button {
-		background: #f8f9fa;
-		border: 2px solid #dee2e6;
-		border-radius: 8px;
+	.answer-btn {
+		width: 100%;
 		padding: 1rem 1.5rem;
-		font-size: 1.1rem;
-		cursor: pointer;
-		transition: all 0.15s ease;
 		text-align: left;
-		color: #333;
-		transform-origin: center;
-		will-change: transform;
+		background: var(--bg-tertiary);
+		border: 2px solid transparent;
+		border-radius: var(--radius);
+		cursor: pointer;
+		transition: all 0.15s;
+		font-size: 1rem;
+		line-height: 1.5;
+		color: var(--text-primary);
 	}
 	
-	.answer-button:hover:not(.disabled) {
-		background: #e9ecef;
-		border-color: #764ba2;
-		transform: translateY(-2px);
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	.answer-btn:hover:not(.disabled) {
+		background: var(--bg-secondary);
+		border-color: var(--primary);
+		transform: translateX(4px);
+		box-shadow: var(--shadow);
 	}
 	
-	.answer-button.selected {
-		background: #764ba2;
+	.answer-btn.selected {
+		background: var(--primary);
 		color: white;
-		border-color: #764ba2;
+		border-color: var(--primary);
 		transform: scale(0.98);
 	}
 	
-	.answer-button.disabled:not(.selected) {
+	.answer-btn.disabled:not(.selected) {
+		opacity: 0.6;
 		cursor: not-allowed;
-		opacity: 0.5;
 	}
 	
-	/* Reaction Box */
-	.reaction-box {
-		margin-top: 1rem;
+	/* Reaction Section */
+	.reaction-section {
+		margin-top: 1.5rem;
 		padding: 1rem;
-		background: #fff3cd;
-		border: 2px solid #ffeeba;
-		border-radius: 8px;
+		background: #fef3c7;
+		border: 2px solid #fbbf24;
+		border-radius: var(--radius);
 		text-align: center;
 	}
 	
-	.reaction-box.game-over {
-		background: #f8d7da;
-		border-color: #f5c6cb;
+	.reaction-section.danger {
+		background: #fee2e2;
+		border-color: #ef4444;
 	}
 	
-	.anger-change {
-		font-size: 1.2rem;
+	.anger-increase {
+		font-size: 1.125rem;
 		font-weight: bold;
-		color: #dc3545;
+		color: var(--danger);
 		margin-bottom: 0.5rem;
 	}
 	
-	.reaction-box p {
+	.reaction-text {
 		margin: 0;
-		font-size: 1.1rem;
-		color: #856404;
+		color: var(--text-primary);
+		font-size: 1rem;
 	}
 	
 	.game-over-text {
-		margin-top: 1rem !important;
-		font-size: 1.3rem !important;
+		margin-top: 0.75rem !important;
+		font-size: 1.125rem !important;
 		font-weight: bold;
-		color: #dc3545 !important;
+		color: var(--danger) !important;
 		animation: pulse 1s ease-in-out infinite;
 	}
 	
-	@keyframes pulse {
-		0%, 100% { transform: scale(1); }
-		50% { transform: scale(1.05); }
-	}
-	
-	/* Result Screen */
-	.result-screen {
-		max-width: 800px;
-		margin: 0 auto;
-		text-align: center;
+	/* Results Screen */
+	.results-screen {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2rem;
+		padding: 2rem 0;
 	}
 	
 	.result-emoji {
 		font-size: 5rem;
-		margin-bottom: 2rem;
 		animation: bounce 2s ease-in-out infinite;
 	}
 	
@@ -442,123 +600,140 @@
 		50% { transform: translateY(-20px); }
 	}
 	
-	.result-content {
-		background: white;
-		border-radius: 12px;
-		padding: 2rem;
-		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-		margin-top: 2rem;
+	.result-card {
+		width: 100%;
+		max-width: 600px;
+		padding: 2.5rem;
+		text-align: center;
 	}
 	
-	.result-content h2 {
-		font-size: 2rem;
-		color: #333;
-		margin: 0 0 0.5rem 0;
+	.result-title {
+		color: var(--text-primary);
+		margin-bottom: 0.5rem;
 	}
 	
-	.result-content h3 {
-		font-size: 1.3rem;
-		color: #764ba2;
-		margin: 0 0 1rem 0;
+	.result-subtitle {
+		color: var(--primary);
+		font-size: 1.25rem;
+		margin-bottom: 1rem;
 	}
 	
-	.result-content p {
-		font-size: 1.1rem;
-		color: #666;
+	.result-description {
+		color: var(--text-secondary);
 		margin-bottom: 2rem;
+		font-size: 1.125rem;
 	}
 	
-	.final-stats {
+	.stats-grid {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(3, 1fr);
 		gap: 1rem;
 		margin-bottom: 2rem;
-		padding: 1rem;
-		background: #f8f9fa;
-		border-radius: 8px;
+		padding: 1.5rem;
+		background: var(--bg-tertiary);
+		border-radius: var(--radius);
 	}
 	
-	.stat {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-	}
-	
-	.stat-label {
-		font-size: 0.9rem;
-		color: #666;
-		margin-bottom: 0.25rem;
+	.stat-item {
+		text-align: center;
 	}
 	
 	.stat-value {
-		font-size: 1.5rem;
+		font-size: 2rem;
 		font-weight: bold;
-		color: #764ba2;
+		color: var(--primary);
+		line-height: 1;
 	}
 	
-	.action-buttons {
+	.stat-label {
+		font-size: 0.875rem;
+		color: var(--text-secondary);
+		margin-top: 0.25rem;
+	}
+	
+	.result-actions {
 		display: flex;
-		flex-direction: column;
 		gap: 1rem;
+		flex-wrap: wrap;
+		justify-content: center;
 	}
 	
-	.share-button, .restart-button {
-		padding: 1rem 2rem;
-		border: none;
-		border-radius: 8px;
-		font-size: 1.1rem;
-		font-weight: bold;
-		cursor: pointer;
-		transition: all 0.2s ease;
-	}
-	
-	.share-button {
-		background: #28a745;
-		color: white;
-	}
-	
-	.share-button:hover {
-		background: #218838;
-		transform: translateY(-2px);
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-	}
-	
-	.restart-button {
-		background: #764ba2;
-		color: white;
-	}
-	
-	.restart-button:hover {
-		background: #5a3a7e;
-		transform: translateY(-2px);
-		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-	}
-	
+	/* Mobile Optimizations */
 	@media (max-width: 768px) {
-		.quiz-header h1 {
-			font-size: 2rem;
+		.quiz-header {
+			padding: 0.75rem;
+		}
+		
+		.quiz-title {
+			font-size: 1.25rem;
+		}
+		
+		.header-spacer {
+			width: 60px;
+		}
+		
+		.quiz-container {
+			padding: 1rem 0.75rem;
+		}
+		
+		.start-card {
+			padding: 2rem 1.5rem;
+		}
+		
+		.question-card {
+			padding: 1.5rem;
 		}
 		
 		.question-text {
-			font-size: 1.2rem;
+			font-size: 1.25rem;
 		}
 		
-		.answer-button {
-			font-size: 1rem;
-			padding: 0.75rem 1rem;
+		.answer-btn {
+			padding: 0.875rem 1rem;
+			font-size: 0.9375rem;
+		}
+		
+		.meter-section {
+			flex-direction: column;
+		}
+		
+		.power-up-section {
+			flex-direction: row;
+			width: 100%;
+			justify-content: center;
+		}
+		
+		.power-up-label {
+			display: none;
+		}
+		
+		.stats-grid {
+			grid-template-columns: 1fr;
+			text-align: center;
+		}
+		
+		.result-actions {
+			flex-direction: column;
+			width: 100%;
+		}
+		
+		.result-actions .btn {
+			width: 100%;
+		}
+	}
+	
+	@media (max-width: 480px) {
+		.start-info {
+			padding: 1rem;
+		}
+		
+		.question-text {
+			font-size: 1.125rem;
+			margin-bottom: 1.5rem;
 		}
 		
 		.result-emoji {
 			font-size: 4rem;
-		}
-		
-		.action-buttons {
-			gap: 0.75rem;
-		}
-		
-		.share-button, .restart-button {
-			font-size: 1rem;
-			padding: 0.75rem 1.5rem;
 		}
 	}
 </style>

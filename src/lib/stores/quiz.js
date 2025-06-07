@@ -13,7 +13,9 @@ function createQuizStore() {
 		selectedAnswer: null,
 		showReaction: false,
 		score: 0,
-		questionsAnswered: 0
+		questionsAnswered: 0,
+		foodPowerUps: 2, // Player starts with 2 food power-ups
+		lastFoodEffect: 0
 	};
 	
 	const { subscribe, set, update } = writable(initialState);
@@ -27,7 +29,8 @@ function createQuizStore() {
 			update(state => ({
 				...initialState,
 				questions: randomQuestions,
-				gameState: 'playing'
+				gameState: 'playing',
+				foodPowerUps: 2 // Reset power-ups
 			}));
 		},
 		
@@ -49,6 +52,24 @@ function createQuizStore() {
 			});
 		},
 		
+		// Use food power-up
+		useFoodPowerUp: () => {
+			update(state => {
+				if (state.foodPowerUps <= 0 || state.gameState !== 'playing') return state;
+				
+				// Random reduction between 1-20
+				const reduction = Math.floor(Math.random() * 20) + 1;
+				const newAnger = Math.max(0, state.anger - reduction);
+				
+				return {
+					...state,
+					anger: newAnger,
+					foodPowerUps: state.foodPowerUps - 1,
+					lastFoodEffect: reduction
+				};
+			});
+		},
+		
 		// Move to next question - just increment index, no recalculation
 		nextQuestion: () => {
 			update(state => {
@@ -65,7 +86,8 @@ function createQuizStore() {
 					currentQuestionIndex: state.currentQuestionIndex + 1,
 					selectedAnswer: null,
 					showReaction: false,
-					gameState: 'playing'
+					gameState: 'playing',
+					lastFoodEffect: 0
 				};
 			});
 		},
