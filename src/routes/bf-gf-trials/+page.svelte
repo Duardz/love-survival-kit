@@ -17,7 +17,7 @@
 	$: ({ anger, gameState, selectedAnswer, showReaction, currentQuestionIndex, foodPowerUps, lastFoodEffect } = $quizStore);
 	
 	// Watch for anger changes to trigger shake
-	$: if (selectedAnswer && selectedAnswer.anger >= 30) {
+	$: if (selectedAnswer && selectedAnswer.anger >= 20) {
 		triggerShake();
 	}
 	
@@ -32,7 +32,7 @@
 		quizStore.selectAnswer(answer);
 		
 		// Auto advance after showing reaction
-		const delay = anger >= 100 ? 1500 : 1800;
+		const delay = anger >= 100 ? 1500 : 2000;
 		autoAdvanceTimer = setTimeout(() => {
 			handleNextQuestion();
 		}, delay);
@@ -97,112 +97,101 @@
 
 {#if isReady}
 	<div class="quiz-page" class:shake={shakeScreen}>
-		<!-- Fixed Header -->
+		<!-- Compact Header -->
 		<header class="quiz-header">
-			<div class="header-content">
-				<a href="/" class="back-link">
-					<span class="back-icon">←</span>
-					<span class="hide-mobile">Back to Kit</span>
-				</a>
-				<h1 class="quiz-title">The BF/GF Trials</h1>
-				<div class="header-spacer"></div>
+			<a href="/" class="back-btn">←</a>
+			<div class="header-info">
+				<h1>The BF/GF Trials</h1>
+				<div class="progress-text">Question {currentQuestionIndex + 1} of 10</div>
+			</div>
+			<div class="header-links">
+				<a href="/about" class="header-link">About</a>
 			</div>
 		</header>
 		
-		<div class="quiz-container">
+		<div class="quiz-content">
 			{#if gameState === 'ready'}
 				<!-- Start Screen -->
 				<div class="start-screen" in:fade={{ duration: 300 }}>
-					<div class="card start-card">
-						<div class="start-icon">🎮</div>
-						<h2>Ready to Test Your Survival Skills?</h2>
-						<div class="start-info">
-							<p>📋 10 random relationship questions</p>
-							<p>😤 Every answer increases her anger</p>
-							<p>🍔 Use food to calm her down (2 available)</p>
-							<p>💔 Game ends at 100% anger</p>
+					<div class="start-card">
+						<div class="start-emoji">💕</div>
+						<h2>Ready for the Ultimate Test?</h2>
+						<p>10 questions. No right answers. Just survival.</p>
+						<div class="rules">
+							<div class="rule">😤 Every answer increases anger</div>
+							<div class="rule">🍔 Use food to calm her (2x)</div>
+							<div class="rule">💔 Game ends at 100% anger</div>
 						</div>
-						<button class="btn btn-primary btn-lg" on:click={startGame}>
+						<button class="btn-start" on:click={startGame}>
 							Start The Trials
 						</button>
 					</div>
 				</div>
 				
 			{:else if gameState === 'playing' || gameState === 'reaction'}
-				<!-- Game Screen -->
-				<div class="game-screen">
-					<!-- Progress Section -->
-					<div class="progress-section">
-						<div class="progress-info">
-							<span class="text-primary">Question {currentQuestionIndex + 1} of 10</span>
-							<span class="text-primary">{10 - currentQuestionIndex - 1} remaining</span>
+				<!-- Game Screen - Compact Layout -->
+				<div class="game-container">
+					<!-- Top Section: Progress + Anger Meter -->
+					<div class="top-section">
+						<div class="progress-bar">
+							<div class="progress-fill" style="width: {$progress}%"></div>
 						</div>
-						<div class="progress-bar-container">
-							<div class="progress-bar-fill" style="width: {$progress}%"></div>
-						</div>
-					</div>
-					
-					<!-- Anger Meter Section -->
-					<div class="meter-section">
-						<AngerMeter {anger} shake={shakeScreen} />
 						
-						<!-- Food Power-up -->
-						<div class="power-up-section">
+						<div class="meter-row">
+							<AngerMeter {anger} shake={shakeScreen} compact={true} />
+							
 							<button 
-								class="power-up-btn" 
+								class="food-btn" 
 								class:disabled={foodPowerUps === 0}
 								on:click={useFoodPowerUp}
 								disabled={foodPowerUps === 0 || gameState !== 'playing'}
 							>
-								<span class="power-up-icon">🍔</span>
-								<span class="power-up-count">{foodPowerUps}</span>
+								<span class="food-icon">🍔</span>
+								<span class="food-count">{foodPowerUps}</span>
 							</button>
-							<div class="power-up-label">Emergency Food</div>
 						</div>
 						
 						{#if showFoodEffect && lastFoodEffect > 0}
 							<div class="food-effect" in:scale={{ duration: 300 }}>
-								-{lastFoodEffect}% Anger! She's slightly calmer... 🍔
+								-{lastFoodEffect}% Anger! 🍔
 							</div>
 						{/if}
 					</div>
 					
-					<!-- Question Card -->
+					<!-- Question Section -->
 					{#if $currentQuestion}
 						{#key currentQuestionIndex}
-							<div class="question-section" in:fly={{ x: 30, duration: 200 }} out:fly={{ x: -30, duration: 150 }}>
-								<div class="card question-card">
-									<h2 class="question-text">{$currentQuestion.question}</h2>
-									
-									<div class="answers-container">
-										{#each $currentQuestion.answers as answer, i}
-											<button 
-												class="answer-btn"
-												class:selected={selectedAnswer === answer}
-												class:disabled={gameState === 'reaction'}
-												on:click={() => handleAnswerSelect(answer)}
-												disabled={gameState === 'reaction' || transitioning}
-												in:fly={{ y: 10, duration: 150, delay: i * 30 }}
-											>
-												{answer.text}
-											</button>
-										{/each}
-									</div>
-									
-									{#if showReaction && selectedAnswer}
-										<div 
-											class="reaction-section" 
-											class:danger={anger >= 100}
-											in:scale={{ duration: 200, start: 0.9 }}
+							<div class="question-box" in:fly={{ x: 30, duration: 200 }} out:fly={{ x: -30, duration: 150 }}>
+								<h2 class="question">{$currentQuestion.question}</h2>
+								
+								<div class="answers">
+									{#each $currentQuestion.answers as answer, i}
+										<button 
+											class="answer-btn"
+											class:selected={selectedAnswer === answer}
+											class:disabled={gameState === 'reaction'}
+											on:click={() => handleAnswerSelect(answer)}
+											disabled={gameState === 'reaction' || transitioning}
+											in:fly={{ y: 10, duration: 150, delay: i * 30 }}
 										>
-											<div class="anger-increase">+{selectedAnswer.anger}% Anger!</div>
-											<p class="reaction-text">{selectedAnswer.reaction}</p>
-											{#if anger >= 100}
-												<p class="game-over-text">💔 RELATIONSHIP CRITICAL FAILURE! 💔</p>
-											{/if}
-										</div>
-									{/if}
+											{answer.text}
+										</button>
+									{/each}
 								</div>
+								
+								{#if showReaction && selectedAnswer}
+									<div 
+										class="reaction-box" 
+										class:critical={anger >= 100}
+										in:scale={{ duration: 200, start: 0.9 }}
+									>
+										<div class="reaction-anger">+{selectedAnswer.anger}% Anger</div>
+										<div class="reaction-text">{selectedAnswer.reaction}</div>
+										{#if anger >= 100}
+											<div class="game-over-alert">💔 RELATIONSHIP CRITICAL! 💔</div>
+										{/if}
+									</div>
+								{/if}
 							</div>
 						{/key}
 					{/if}
@@ -215,39 +204,37 @@
 						{$finalResult.emoji}
 					</div>
 					
-					<div class="card result-card" in:fly={{ y: 20, duration: 400, delay: 200 }}>
-						<h2 class="result-title">{$finalResult.title}</h2>
-						<h3 class="result-subtitle">{$finalResult.subtitle}</h3>
-						<p class="result-description">{$finalResult.description}</p>
+					<div class="result-card" in:fly={{ y: 20, duration: 400, delay: 200 }}>
+						<h2>{$finalResult.title}</h2>
+						<p class="result-subtitle">{$finalResult.subtitle}</p>
+						<p>{$finalResult.description}</p>
 						
-						<div class="stats-grid">
-							<div class="stat-item">
-								<div class="stat-value">{anger}%</div>
-								<div class="stat-label">Final Anger</div>
+						<div class="final-stats">
+							<div class="stat">
+								<span class="stat-num">{anger}%</span>
+								<span class="stat-label">Final Anger</span>
 							</div>
-							<div class="stat-item">
-								<div class="stat-value">{$quizStore.questionsAnswered}</div>
-								<div class="stat-label">Questions Survived</div>
+							<div class="stat">
+								<span class="stat-num">{$quizStore.questionsAnswered}</span>
+								<span class="stat-label">Survived</span>
 							</div>
-							<div class="stat-item">
-								<div class="stat-value">{2 - foodPowerUps}</div>
-								<div class="stat-label">Food Used</div>
+							<div class="stat">
+								<span class="stat-num">{2 - foodPowerUps}</span>
+								<span class="stat-label">Food Used</span>
 							</div>
 						</div>
 						
-						<div class="result-actions">
-							<button class="btn btn-success btn-lg" on:click={shareResult}>
-								📱 Share Result
+						<div class="result-buttons">
+							<button class="btn-share" on:click={shareResult}>
+								Share Result 📱
 							</button>
-							<button class="btn btn-primary btn-lg" on:click={restart}>
-								🔄 Try Again
+							<button class="btn-retry" on:click={restart}>
+								Try Again 🔄
 							</button>
 						</div>
 					</div>
 					
-					<div in:fly={{ y: 20, duration: 400, delay: 400 }}>
-						<AngerMeter {anger} />
-					</div>
+					<AngerMeter {anger} compact={false} />
 				</div>
 			{/if}
 		</div>
@@ -258,255 +245,277 @@
 	.quiz-page {
 		min-height: 100vh;
 		background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
-		position: relative;
-		overflow-x: hidden;
+		display: flex;
+		flex-direction: column;
 	}
 	
 	.quiz-page.shake {
 		animation: shake 0.5s ease-in-out;
 	}
 	
-	/* Header */
-	.quiz-header {
-		position: sticky;
-		top: 0;
-		z-index: 100;
-		background: rgba(255, 255, 255, 0.1);
-		backdrop-filter: blur(10px);
-		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+	@keyframes shake {
+		0%, 100% { transform: translateX(0); }
+		10%, 30%, 50%, 70%, 90% { transform: translateX(-3px); }
+		20%, 40%, 60%, 80% { transform: translateX(3px); }
 	}
 	
-	.header-content {
-		max-width: 1200px;
-		margin: 0 auto;
-		padding: 1rem;
+	/* Compact Header */
+	.quiz-header {
+		background: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(10px);
+		padding: 0.75rem 1rem;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 	}
 	
-	.back-link {
+	.back-btn {
+		width: 40px;
+		height: 40px;
+		background: rgba(255, 255, 255, 0.2);
+		border: none;
+		border-radius: 50%;
+		color: white;
+		font-size: 1.25rem;
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		color: white;
-		font-weight: 500;
-		transition: opacity 0.2s;
+		justify-content: center;
+		cursor: pointer;
+		transition: all 0.2s;
+		text-decoration: none;
 	}
 	
-	.back-link:hover {
-		opacity: 0.8;
+	.back-btn:hover {
+		background: rgba(255, 255, 255, 0.3);
+		transform: scale(1.1);
 	}
 	
-	.back-icon {
+	.header-info {
+		flex: 1;
+		text-align: center;
+	}
+	
+	.header-info h1 {
 		font-size: 1.25rem;
-	}
-	
-	.quiz-title {
-		font-size: 1.5rem;
 		color: white;
 		margin: 0;
-		text-align: center;
+		font-weight: 600;
+	}
+	
+	.progress-text {
+		font-size: 0.875rem;
+		color: rgba(255, 255, 255, 0.9);
+		margin-top: 0.125rem;
+	}
+	
+	.header-links {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+	}
+	
+	.header-link {
+		color: rgba(255, 255, 255, 0.9);
+		text-decoration: none;
+		font-size: 0.875rem;
+		font-weight: 500;
+		transition: color 0.2s;
+		padding: 0.5rem;
+	}
+	
+	.header-link:hover {
+		color: white;
+	}
+	
+	/* Content Area */
+	.quiz-content {
 		flex: 1;
-	}
-	
-	.header-spacer {
-		width: 100px;
-	}
-	
-	/* Container */
-	.quiz-container {
-		max-width: 800px;
-		margin: 0 auto;
-		padding: 2rem 1rem;
-		min-height: calc(100vh - 80px);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+		overflow-y: auto;
 	}
 	
 	/* Start Screen */
 	.start-screen {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		min-height: calc(100vh - 160px);
+		width: 100%;
+		max-width: 400px;
 	}
 	
 	.start-card {
+		background: white;
+		border-radius: 20px;
+		padding: 2.5rem 2rem;
 		text-align: center;
-		padding: 3rem;
-		max-width: 500px;
-		width: 100%;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 	}
 	
-	.start-icon {
+	.start-emoji {
 		font-size: 4rem;
-		margin-bottom: 1.5rem;
+		margin-bottom: 1rem;
 		animation: pulse 2s ease-in-out infinite;
 	}
 	
+	@keyframes pulse {
+		0%, 100% { transform: scale(1); }
+		50% { transform: scale(1.1); }
+	}
+	
 	.start-card h2 {
-		color: var(--text-primary);
-		margin-bottom: 2rem;
+		color: #111827;
+		margin-bottom: 0.5rem;
+		font-size: 1.75rem;
 	}
 	
-	.start-info {
-		text-align: left;
-		background: var(--bg-tertiary);
-		border-radius: var(--radius);
-		padding: 1.5rem;
-		margin-bottom: 2rem;
+	.start-card p {
+		color: #6b7280;
+		margin-bottom: 1.5rem;
 	}
 	
-	.start-info p {
-		margin: 0.5rem 0;
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		color: var(--text-primary);
+	.rules {
+		background: #f9fafb;
+		border-radius: 12px;
+		padding: 1rem;
+		margin-bottom: 1.5rem;
 	}
 	
-	/* Game Screen */
-	.game-screen {
+	.rule {
+		padding: 0.5rem 0;
+		color: #4b5563;
+		font-size: 0.9375rem;
+	}
+	
+	.btn-start {
+		width: 100%;
+		padding: 1rem 2rem;
+		background: #7c3aed;
+		color: white;
+		border: none;
+		border-radius: 12px;
+		font-size: 1.125rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s;
+	}
+	
+	.btn-start:hover {
+		background: #6d28d9;
+		transform: translateY(-2px);
+		box-shadow: 0 5px 15px rgba(124, 58, 237, 0.4);
+	}
+	
+	/* Game Container */
+	.game-container {
+		width: 100%;
+		max-width: 500px;
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
-	}
-	
-	/* Progress Section */
-	.progress-section {
-		background: rgba(255, 255, 255, 0.95);
-		border-radius: var(--radius-lg);
-		padding: 1rem;
-		box-shadow: var(--shadow);
-	}
-	
-	.progress-info {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-bottom: 0.75rem;
-		font-weight: 500;
-		color: var(--text-primary);
-	}
-	
-	.progress-bar-container {
-		height: 8px;
-		background: var(--bg-tertiary);
-		border-radius: var(--radius-full);
-		overflow: hidden;
-	}
-	
-	.progress-bar-fill {
-		height: 100%;
-		background: linear-gradient(90deg, var(--success), var(--success-dark));
-		transition: width 0.5s ease;
-		border-radius: var(--radius-full);
-	}
-	
-	/* Meter Section */
-	.meter-section {
-		position: relative;
-		display: flex;
-		align-items: center;
 		gap: 1rem;
 	}
 	
-	/* Power-up Section */
-	.power-up-section {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.25rem;
+	/* Top Section */
+	.top-section {
+		background: rgba(255, 255, 255, 0.95);
+		border-radius: 16px;
+		padding: 1rem;
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 	}
 	
-	.power-up-btn {
+	.progress-bar {
+		height: 6px;
+		background: #e5e7eb;
+		border-radius: 3px;
+		margin-bottom: 1rem;
+		overflow: hidden;
+	}
+	
+	.progress-fill {
+		height: 100%;
+		background: #10b981;
+		transition: width 0.5s ease;
+		border-radius: 3px;
+	}
+	
+	.meter-row {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+	}
+	
+	.food-btn {
 		position: relative;
-		width: 60px;
-		height: 60px;
-		border-radius: var(--radius-full);
+		width: 50px;
+		height: 50px;
 		background: white;
-		border: 3px solid var(--primary);
+		border: 2px solid #7c3aed;
+		border-radius: 50%;
 		cursor: pointer;
 		transition: all 0.2s;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		box-shadow: var(--shadow);
+		flex-shrink: 0;
 	}
 	
-	.power-up-btn:hover:not(.disabled) {
+	.food-btn:hover:not(.disabled) {
 		transform: scale(1.1);
-		box-shadow: var(--shadow-md);
+		box-shadow: 0 4px 10px rgba(124, 58, 237, 0.3);
 	}
 	
-	.power-up-btn:active:not(.disabled) {
-		transform: scale(0.95);
-	}
-	
-	.power-up-btn.disabled {
+	.food-btn.disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
-		border-color: var(--text-light);
+		border-color: #e5e7eb;
 	}
 	
-	.power-up-icon {
-		font-size: 1.75rem;
+	.food-icon {
+		font-size: 1.5rem;
 	}
 	
-	.power-up-count {
+	.food-count {
 		position: absolute;
 		top: -5px;
 		right: -5px;
-		background: var(--danger);
+		background: #ef4444;
 		color: white;
-		width: 24px;
-		height: 24px;
-		border-radius: var(--radius-full);
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		font-size: 0.875rem;
-		font-weight: bold;
-	}
-	
-	.power-up-label {
 		font-size: 0.75rem;
-		color: white;
-		font-weight: 500;
-		text-align: center;
+		font-weight: bold;
 	}
 	
 	.food-effect {
-		position: absolute;
-		top: -40px;
-		left: 50%;
-		transform: translateX(-50%);
-		background: var(--success);
-		color: white;
-		padding: 0.5rem 1rem;
-		border-radius: var(--radius-full);
-		font-weight: bold;
-		white-space: nowrap;
-		box-shadow: var(--shadow);
-	}
-	
-	/* Question Section */
-	.question-section {
-		flex: 1;
-	}
-	
-	.question-card {
-		padding: 2rem;
-	}
-	
-	.question-text {
-		font-size: 1.5rem;
-		color: var(--text-primary);
+		margin-top: 0.5rem;
 		text-align: center;
-		margin-bottom: 2rem;
-		line-height: 1.4;
+		color: #10b981;
+		font-weight: 600;
+		font-size: 0.9375rem;
 	}
 	
-	.answers-container {
+	/* Question Box */
+	.question-box {
+		background: white;
+		border-radius: 16px;
+		padding: 1.5rem;
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+	}
+	
+	.question {
+		font-size: 1.25rem;
+		color: #111827;
+		margin-bottom: 1.5rem;
+		text-align: center;
+		line-height: 1.4;
+		font-weight: 600;
+	}
+	
+	.answers {
 		display: flex;
 		flex-direction: column;
 		gap: 0.75rem;
@@ -514,30 +523,29 @@
 	
 	.answer-btn {
 		width: 100%;
-		padding: 1rem 1.5rem;
+		padding: 1rem;
+		background: #f9fafb;
+		border: 2px solid #e5e7eb;
+		border-radius: 12px;
 		text-align: left;
-		background: var(--bg-tertiary);
-		border: 2px solid transparent;
-		border-radius: var(--radius);
 		cursor: pointer;
 		transition: all 0.15s;
-		font-size: 1rem;
-		line-height: 1.5;
-		color: var(--text-primary);
+		font-size: 0.9375rem;
+		color: #374151;
+		font-weight: 500;
 	}
 	
 	.answer-btn:hover:not(.disabled) {
-		background: var(--bg-secondary);
-		border-color: var(--primary);
+		background: white;
+		border-color: #7c3aed;
 		transform: translateX(4px);
-		box-shadow: var(--shadow);
+		box-shadow: 0 2px 8px rgba(124, 58, 237, 0.15);
 	}
 	
 	.answer-btn.selected {
-		background: var(--primary);
+		background: #7c3aed;
 		color: white;
-		border-color: var(--primary);
-		transform: scale(0.98);
+		border-color: #7c3aed;
 	}
 	
 	.answer-btn.disabled:not(.selected) {
@@ -545,49 +553,58 @@
 		cursor: not-allowed;
 	}
 	
-	/* Reaction Section */
-	.reaction-section {
-		margin-top: 1.5rem;
+	/* Reaction Box */
+	.reaction-box {
+		margin-top: 1rem;
 		padding: 1rem;
 		background: #fef3c7;
 		border: 2px solid #fbbf24;
-		border-radius: var(--radius);
+		border-radius: 12px;
 		text-align: center;
 	}
 	
-	.reaction-section.danger {
+	.reaction-box.critical {
 		background: #fee2e2;
 		border-color: #ef4444;
 	}
 	
-	.anger-increase {
-		font-size: 1.125rem;
-		font-weight: bold;
-		color: var(--danger);
-		margin-bottom: 0.5rem;
+	.reaction-anger {
+		font-size: 0.875rem;
+		font-weight: 700;
+		color: #dc2626;
+		margin-bottom: 0.25rem;
 	}
 	
 	.reaction-text {
-		margin: 0;
-		color: var(--text-primary);
-		font-size: 1rem;
+		color: #92400e;
+		font-weight: 500;
+		line-height: 1.4;
 	}
 	
-	.game-over-text {
-		margin-top: 0.75rem !important;
-		font-size: 1.125rem !important;
-		font-weight: bold;
-		color: var(--danger) !important;
-		animation: pulse 1s ease-in-out infinite;
+	.critical .reaction-text {
+		color: #991b1b;
+	}
+	
+	.game-over-alert {
+		margin-top: 0.5rem;
+		font-weight: 700;
+		color: #dc2626;
+		animation: flash 1s ease-in-out infinite;
+	}
+	
+	@keyframes flash {
+		0%, 100% { opacity: 1; }
+		50% { opacity: 0.7; }
 	}
 	
 	/* Results Screen */
 	.results-screen {
+		width: 100%;
+		max-width: 500px;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 2rem;
-		padding: 2rem 0;
+		gap: 1.5rem;
 	}
 	
 	.result-emoji {
@@ -601,139 +618,149 @@
 	}
 	
 	.result-card {
-		width: 100%;
-		max-width: 600px;
-		padding: 2.5rem;
+		background: white;
+		border-radius: 20px;
+		padding: 2rem;
 		text-align: center;
+		box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+		width: 100%;
 	}
 	
-	.result-title {
-		color: var(--text-primary);
+	.result-card h2 {
+		color: #111827;
 		margin-bottom: 0.5rem;
+		font-size: 1.75rem;
 	}
 	
 	.result-subtitle {
-		color: var(--primary);
-		font-size: 1.25rem;
-		margin-bottom: 1rem;
-	}
-	
-	.result-description {
-		color: var(--text-secondary);
-		margin-bottom: 2rem;
+		color: #7c3aed;
 		font-size: 1.125rem;
+		font-weight: 600;
+		margin-bottom: 0.75rem;
 	}
 	
-	.stats-grid {
+	.result-card p {
+		color: #6b7280;
+		margin-bottom: 1.5rem;
+		line-height: 1.5;
+	}
+	
+	.final-stats {
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 1rem;
-		margin-bottom: 2rem;
-		padding: 1.5rem;
-		background: var(--bg-tertiary);
-		border-radius: var(--radius);
+		margin-bottom: 1.5rem;
+		padding: 1rem;
+		background: #f9fafb;
+		border-radius: 12px;
 	}
 	
-	.stat-item {
+	.stat {
 		text-align: center;
 	}
 	
-	.stat-value {
-		font-size: 2rem;
-		font-weight: bold;
-		color: var(--primary);
-		line-height: 1;
+	.stat-num {
+		display: block;
+		font-size: 1.5rem;
+		font-weight: 700;
+		color: #7c3aed;
+		margin-bottom: 0.25rem;
 	}
 	
 	.stat-label {
-		font-size: 0.875rem;
-		color: var(--text-secondary);
-		margin-top: 0.25rem;
+		font-size: 0.75rem;
+		color: #6b7280;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
 	}
 	
-	.result-actions {
-		display: flex;
+	.result-buttons {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 		gap: 1rem;
-		flex-wrap: wrap;
-		justify-content: center;
 	}
 	
-	/* Mobile Optimizations */
-	@media (max-width: 768px) {
-		.quiz-header {
+	.btn-share, .btn-retry {
+		padding: 0.75rem 1rem;
+		border: none;
+		border-radius: 10px;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s;
+		font-size: 0.9375rem;
+	}
+	
+	.btn-share {
+		background: #10b981;
+		color: white;
+	}
+	
+	.btn-share:hover {
+		background: #059669;
+		transform: translateY(-2px);
+	}
+	
+	.btn-retry {
+		background: #7c3aed;
+		color: white;
+	}
+	
+	.btn-retry:hover {
+		background: #6d28d9;
+		transform: translateY(-2px);
+	}
+	
+	/* Mobile Responsive */
+	@media (max-width: 480px) {
+		.quiz-content {
 			padding: 0.75rem;
-		}
-		
-		.quiz-title {
-			font-size: 1.25rem;
-		}
-		
-		.header-spacer {
-			width: 60px;
-		}
-		
-		.quiz-container {
-			padding: 1rem 0.75rem;
 		}
 		
 		.start-card {
 			padding: 2rem 1.5rem;
 		}
 		
-		.question-card {
-			padding: 1.5rem;
+		.question-box {
+			padding: 1.25rem;
 		}
 		
-		.question-text {
-			font-size: 1.25rem;
+		.question {
+			font-size: 1.125rem;
 		}
 		
 		.answer-btn {
-			padding: 0.875rem 1rem;
-			font-size: 0.9375rem;
+			padding: 0.875rem;
+			font-size: 0.875rem;
 		}
 		
-		.meter-section {
-			flex-direction: column;
-		}
-		
-		.power-up-section {
-			flex-direction: row;
-			width: 100%;
-			justify-content: center;
-		}
-		
-		.power-up-label {
-			display: none;
-		}
-		
-		.stats-grid {
-			grid-template-columns: 1fr;
-			text-align: center;
-		}
-		
-		.result-actions {
-			flex-direction: column;
-			width: 100%;
-		}
-		
-		.result-actions .btn {
-			width: 100%;
-		}
-	}
-	
-	@media (max-width: 480px) {
-		.start-info {
-			padding: 1rem;
-		}
-		
-		.question-text {
-			font-size: 1.125rem;
-			margin-bottom: 1.5rem;
+		.result-card {
+			padding: 1.5rem;
 		}
 		
 		.result-emoji {
 			font-size: 4rem;
+		}
+	}
+	
+	@media (max-height: 700px) {
+		.quiz-header {
+			padding: 0.5rem 1rem;
+		}
+		
+		.top-section {
+			padding: 0.75rem;
+		}
+		
+		.question-box {
+			padding: 1rem;
+		}
+		
+		.question {
+			margin-bottom: 1rem;
+		}
+		
+		.answers {
+			gap: 0.5rem;
 		}
 	}
 </style>

@@ -145,6 +145,13 @@
 	<footer class="footer">
 		<div class="container">
 			<p>Remember: In relationships, you're not always wrong... but you're never right. 😅</p>
+			<div class="footer-links">
+				<a href="/about" class="footer-link">About</a>
+				<span class="separator">•</span>
+				<a href="https://github.com/duardz" target="_blank" rel="noopener noreferrer" class="footer-link">
+					GitHub
+				</a>
+			</div>
 			<p class="footer-credit">Made with 💜 and lots of relationship experience</p>
 		</div>
 	</footer>
@@ -406,9 +413,34 @@
 		opacity: 0.9;
 	}
 	
+	.footer-links {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 1rem;
+		margin: 1rem 0;
+	}
+	
+	.footer-link {
+		color: rgba(255, 255, 255, 0.9);
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.2s;
+	}
+	
+	.footer-link:hover {
+		color: white;
+		text-decoration: underline;
+	}
+	
+	.separator {
+		color: rgba(255, 255, 255, 0.5);
+	}
+	
 	.footer-credit {
 		font-size: 0.875rem;
 		opacity: 0.7;
+		margin-top: 0.5rem;
 	}
 	
 	/* Mobile Styles */
