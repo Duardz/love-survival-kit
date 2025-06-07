@@ -1,3 +1,4 @@
+// @ts-nocheck
 // src/lib/data/questions.js
 
 export const questions = [
