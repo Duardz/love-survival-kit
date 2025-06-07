@@ -189,23 +189,28 @@
 	}
 	
 	.hero-title {
-		font-size: 3.5rem;
-		font-weight: 800;
+		font-size: var(--text-5xl);
+		font-weight: var(--font-extrabold);
+		font-family: var(--font-display);
+		letter-spacing: var(--tracking-tighter);
 		margin-bottom: 1rem;
 		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-		line-height: 1.1;
+		line-height: var(--leading-tight);
 	}
 	
 	.hero-subtitle {
-		font-size: 1.5rem;
+		font-size: var(--text-xl);
+		font-weight: var(--font-light);
+		font-family: var(--font-sans);
 		opacity: 0.95;
 		margin-bottom: 2rem;
-		font-weight: 300;
+		letter-spacing: var(--tracking-wide);
+		line-height: var(--leading-relaxed);
 	}
 	
 	.hero-warning {
 		background: rgba(255, 255, 255, 0.95);
-		color: #0c1018;
+		color: #111827;
 		padding: 1rem 2rem;
 		border-radius: var(--radius-lg);
 		display: inline-block;
@@ -216,7 +221,7 @@
 	/* Tools Section */
 	.tools-section {
 		padding: 3rem 0;
-		background: #232424;
+		background: #f9fafb;
 		border-radius: 2rem 2rem 0 0;
 		margin-top: -2rem;
 		position: relative;
@@ -226,9 +231,11 @@
 	.section-title {
 		text-align: center;
 		margin-bottom: 3rem;
-		color: #f8f9fa;
-		font-size: 2.5rem;
-		font-weight: 700;
+		color: #111827;
+		font-size: var(--text-4xl);
+		font-weight: var(--font-bold);
+		font-family: var(--font-display);
+		letter-spacing: var(--tracking-tight);
 	}
 	
 	.tools-grid {

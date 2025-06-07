@@ -297,16 +297,20 @@
 	}
 	
 	.header-info h1 {
-		font-size: 1.25rem;
+		font-size: var(--text-xl);
+		font-family: var(--font-display);
+		font-weight: var(--font-semibold);
+		letter-spacing: var(--tracking-tight);
 		color: white;
 		margin: 0;
-		font-weight: 600;
 	}
 	
 	.progress-text {
-		font-size: 0.875rem;
+		font-size: var(--text-sm);
+		font-weight: var(--font-medium);
 		color: rgba(255, 255, 255, 0.9);
 		margin-top: 0.125rem;
+		letter-spacing: var(--tracking-wide);
 	}
 	
 	.header-links {
@@ -511,12 +515,14 @@
 	}
 	
 	.question {
-		font-size: 1.25rem;
+		font-size: var(--text-2xl);
+		font-family: var(--font-display);
+		font-weight: var(--font-semibold);
 		color: #111827;
 		margin-bottom: 1.5rem;
 		text-align: center;
-		line-height: 1.4;
-		font-weight: 600;
+		line-height: var(--leading-snug);
+		letter-spacing: var(--tracking-tight);
 	}
 	
 	.answers {
@@ -535,9 +541,12 @@
 		text-align: left;
 		cursor: pointer;
 		transition: all 0.15s;
-		font-size: 0.9375rem;
+		font-size: var(--text-base);
+		font-family: var(--font-sans);
+		font-weight: var(--font-medium);
+		line-height: var(--leading-relaxed);
 		color: #374151;
-		font-weight: 500;
+		letter-spacing: var(--tracking-normal);
 	}
 	
 	.answer-btn:hover:not(.disabled) {
