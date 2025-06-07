@@ -134,8 +134,8 @@
 					<!-- Progress Section -->
 					<div class="progress-section">
 						<div class="progress-info">
-							<span>Question {currentQuestionIndex + 1} of 10</span>
-							<span class="text-secondary">{10 - currentQuestionIndex - 1} remaining</span>
+							<span class="text-primary">Question {currentQuestionIndex + 1} of 10</span>
+							<span class="text-primary">{10 - currentQuestionIndex - 1} remaining</span>
 						</div>
 						<div class="progress-bar-container">
 							<div class="progress-bar-fill" style="width: {$progress}%"></div>
