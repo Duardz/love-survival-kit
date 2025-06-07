@@ -216,7 +216,7 @@
 	/* Tools Section */
 	.tools-section {
 		padding: 3rem 0;
-		background: #f9fafb;
+		background: #9d9e9e;
 		border-radius: 2rem 2rem 0 0;
 		margin-top: -2rem;
 		position: relative;
