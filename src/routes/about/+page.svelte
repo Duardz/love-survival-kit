@@ -78,13 +78,16 @@
 				
 				<div class="tech-section" in:fly={{ y: 20, duration: 400, delay: 1200 }}>
 					<h2>🛠️ Built With</h2>
-					<div class="tech-stack">
-						<span class="tech-badge">SvelteKit</span>
-						<span class="tech-badge">JavaScript</span>
-						<span class="tech-badge">CSS</span>
-						<span class="tech-badge">Love</span>
-						<span class="tech-badge">Tears</span>
-					</div>
+                    <div class="tech-stack">
+                        <span class="tech-badge">SvelteKit</span>
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">CSS</span>
+                        <span class="tech-badge">Love</span>
+                        <span class="tech-badge">Tears</span>
+                    </div>
+                    <p class="dev-note">
+                        🚧 This app is still under active development, with love, late nights, and some occasional help from Claude AI. Stay tuned for more chaotic features!
+                    </p>
 				</div>
 				
 				<div class="footer-section">
@@ -288,6 +291,13 @@
 		font-weight: 500;
 	}
 	
+    .dev-note {
+        margin-top: 1rem;
+        color: #4b5563;
+        font-size: 0.95rem;
+        font-style: italic;
+        text-align: center;
+    }
 	.footer-section {
 		text-align: center;
 		margin-top: 3rem;

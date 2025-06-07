@@ -205,7 +205,7 @@
 	
 	.hero-warning {
 		background: rgba(255, 255, 255, 0.95);
-		color: #111827;
+		color: #0c1018;
 		padding: 1rem 2rem;
 		border-radius: var(--radius-lg);
 		display: inline-block;
@@ -216,7 +216,7 @@
 	/* Tools Section */
 	.tools-section {
 		padding: 3rem 0;
-		background: #9d9e9e;
+		background: #232424;
 		border-radius: 2rem 2rem 0 0;
 		margin-top: -2rem;
 		position: relative;
@@ -226,7 +226,7 @@
 	.section-title {
 		text-align: center;
 		margin-bottom: 3rem;
-		color: #111827;
+		color: #f8f9fa;
 		font-size: 2.5rem;
 		font-weight: 700;
 	}
