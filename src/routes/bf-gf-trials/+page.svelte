@@ -504,6 +504,10 @@
 		border-radius: 16px;
 		padding: 1.5rem;
 		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+		min-height: 400px;
+		display: flex;
+		flex-direction: column;
+		position: relative;
 	}
 	
 	.question {
@@ -519,6 +523,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.75rem;
+		flex: 1;
 	}
 	
 	.answer-btn {
@@ -555,12 +560,17 @@
 	
 	/* Reaction Box */
 	.reaction-box {
-		margin-top: 1rem;
+		position: absolute;
+		bottom: 1.5rem;
+		left: 1.5rem;
+		right: 1.5rem;
 		padding: 1rem;
 		background: #fef3c7;
 		border: 2px solid #fbbf24;
 		border-radius: 12px;
 		text-align: center;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+		z-index: 10;
 	}
 	
 	.reaction-box.critical {
@@ -722,6 +732,7 @@
 		
 		.question-box {
 			padding: 1.25rem;
+			min-height: 380px;
 		}
 		
 		.question {
@@ -729,6 +740,14 @@
 		}
 		
 		.answer-btn {
+			padding: 0.875rem;
+			font-size: 0.875rem;
+		}
+		
+		.reaction-box {
+			left: 1.25rem;
+			right: 1.25rem;
+			bottom: 1.25rem;
 			padding: 0.875rem;
 			font-size: 0.875rem;
 		}
@@ -753,6 +772,7 @@
 		
 		.question-box {
 			padding: 1rem;
+			min-height: 340px;
 		}
 		
 		.question {
@@ -761,6 +781,17 @@
 		
 		.answers {
 			gap: 0.5rem;
+		}
+		
+		.answer-btn {
+			padding: 0.75rem;
+		}
+		
+		.reaction-box {
+			padding: 0.75rem;
+			bottom: 1rem;
+			left: 1rem;
+			right: 1rem;
 		}
 	}
 </style>
