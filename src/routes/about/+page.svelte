@@ -107,6 +107,10 @@
 		max-width: 800px;
 		margin: 0 auto 2rem;
 	}
+
+    h2 {
+        color:rgb(0, 0, 0)
+    }
 	
 	.back-btn {
 		display: inline-flex;
