@@ -12,6 +12,7 @@
 	let isReady = false;
 	let showFoodEffect = false;
 	let autoAdvanceTimer;
+	let questionContainer;
 	
 	// Subscribe to store
 	$: ({ anger, gameState, selectedAnswer, showReaction, currentQuestionIndex, foodPowerUps, lastFoodEffect } = $quizStore);
@@ -39,12 +40,19 @@
 	}
 	
 	function handleNextQuestion() {
-		transitioning = true;
-		quizStore.nextQuestion();
+		if (transitioning) return;
 		
+		transitioning = true;
+		
+		// Add a small delay before changing question to ensure smooth animation
 		setTimeout(() => {
-			transitioning = false;
-		}, 150);
+			quizStore.nextQuestion();
+			
+			// Reset transitioning state after animation completes
+			setTimeout(() => {
+				transitioning = false;
+			}, 300);
+		}, 100);
 	}
 	
 	function useFoodPowerUp() {
@@ -84,6 +92,11 @@
 	
 	onMount(() => {
 		quizStore.reset();
+		
+		// Force GPU acceleration on mobile
+		if (questionContainer) {
+			questionContainer.style.transform = 'translateZ(0)';
+		}
 	});
 	
 	onDestroy(() => {
@@ -130,7 +143,7 @@
 				
 			{:else if gameState === 'playing' || gameState === 'reaction'}
 				<!-- Game Screen - Compact Layout -->
-				<div class="game-container">
+				<div class="game-container" bind:this={questionContainer}>
 					<!-- Top Section: Progress + Anger Meter -->
 					<div class="top-section">
 						<div class="progress-bar">
@@ -158,43 +171,45 @@
 						{/if}
 					</div>
 					
-					<!-- Question Section -->
-					{#if $currentQuestion}
-						{#key currentQuestionIndex}
-							<div class="question-box" in:fly={{ x: 30, duration: 200 }} out:fly={{ x: -30, duration: 150 }}>
-								<h2 class="question">{$currentQuestion.question}</h2>
-								
-								<div class="answers">
-									{#each $currentQuestion.answers as answer, i}
-										<button 
-											class="answer-btn"
-											class:selected={selectedAnswer === answer}
-											class:disabled={gameState === 'reaction'}
-											on:click={() => handleAnswerSelect(answer)}
-											disabled={gameState === 'reaction' || transitioning}
-											in:fly={{ y: 10, duration: 150, delay: i * 30 }}
-										>
-											{answer.text}
-										</button>
-									{/each}
-								</div>
-								
-								{#if showReaction && selectedAnswer}
-									<div 
-										class="reaction-box" 
-										class:critical={anger >= 100}
-										in:scale={{ duration: 200, start: 0.9 }}
-									>
-										<div class="reaction-anger">{selectedAnswer.anger}% Anger</div>
-										<div class="reaction-text">{selectedAnswer.reaction}</div>
-										{#if anger >= 100}
-											<div class="game-over-alert">💔 RELATIONSHIP CRITICAL! 💔</div>
-										{/if}
+					<!-- Question Section with improved transitions -->
+					<div class="question-wrapper">
+						{#if $currentQuestion && !transitioning}
+							{#key currentQuestionIndex}
+								<div class="question-box" in:fade={{ duration: 200 }} out:fade={{ duration: 150 }}>
+									<h2 class="question">{$currentQuestion.question}</h2>
+									
+									<div class="answers">
+										{#each $currentQuestion.answers as answer, i}
+											<button 
+												class="answer-btn"
+												class:selected={selectedAnswer === answer}
+												class:disabled={gameState === 'reaction'}
+												on:click={() => handleAnswerSelect(answer)}
+												disabled={gameState === 'reaction' || transitioning}
+												in:fly={{ y: 10, duration: 150, delay: i * 30 }}
+											>
+												{answer.text}
+											</button>
+										{/each}
 									</div>
-								{/if}
-							</div>
-						{/key}
-					{/if}
+									
+									{#if showReaction && selectedAnswer}
+										<div 
+											class="reaction-box" 
+											class:critical={anger >= 100}
+											in:scale={{ duration: 200, start: 0.9 }}
+										>
+											<div class="reaction-anger">{selectedAnswer.anger}% Anger</div>
+											<div class="reaction-text">{selectedAnswer.reaction}</div>
+											{#if anger >= 100}
+												<div class="game-over-alert">💔 RELATIONSHIP CRITICAL! 💔</div>
+											{/if}
+										</div>
+									{/if}
+								</div>
+							{/key}
+						{/if}
+					</div>
 				</div>
 				
 			{:else if gameState === 'finished'}
@@ -247,6 +262,11 @@
 		background: linear-gradient(135deg, #7c3aed 0%, #ec4899 100%);
 		display: flex;
 		flex-direction: column;
+		/* Enable GPU acceleration */
+		transform: translateZ(0);
+		-webkit-transform: translateZ(0);
+		backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
 	}
 	
 	.quiz-page.shake {
@@ -263,11 +283,14 @@
 	.quiz-header {
 		background: rgba(255, 255, 255, 0.1);
 		backdrop-filter: blur(10px);
+		-webkit-backdrop-filter: blur(10px);
 		padding: 0.75rem 1rem;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
 		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		/* Prevent reflow */
+		min-height: 60px;
 	}
 	
 	.back-btn {
@@ -284,6 +307,8 @@
 		cursor: pointer;
 		transition: all 0.2s;
 		text-decoration: none;
+		/* Prevent button from causing reflow */
+		flex-shrink: 0;
 	}
 	
 	.back-btn:hover {
@@ -340,6 +365,8 @@
 		justify-content: center;
 		padding: 1rem;
 		overflow-y: auto;
+		/* Smooth scrolling on iOS */
+		-webkit-overflow-scrolling: touch;
 	}
 	
 	/* Start Screen */
@@ -402,6 +429,7 @@
 		font-weight: 600;
 		cursor: pointer;
 		transition: all 0.2s;
+		-webkit-tap-highlight-color: transparent;
 	}
 	
 	.btn-start:hover {
@@ -417,6 +445,9 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
+		/* Enable GPU acceleration */
+		transform: translateZ(0);
+		-webkit-transform: translateZ(0);
 	}
 	
 	/* Top Section */
@@ -425,6 +456,8 @@
 		border-radius: 16px;
 		padding: 1rem;
 		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+		/* Prevent layout shift */
+		min-height: 100px;
 	}
 	
 	.progress-bar {
@@ -440,12 +473,14 @@
 		background: #10b981;
 		transition: width 0.5s ease;
 		border-radius: 3px;
+		will-change: width;
 	}
 	
 	.meter-row {
 		display: flex;
 		gap: 1rem;
 		align-items: center;
+		justify-content: space-between;
 	}
 	
 	.food-btn {
@@ -461,6 +496,7 @@
 		align-items: center;
 		justify-content: center;
 		flex-shrink: 0;
+		-webkit-tap-highlight-color: transparent;
 	}
 	
 	.food-btn:hover:not(.disabled) {
@@ -502,6 +538,15 @@
 		font-size: 0.9375rem;
 	}
 	
+	/* Question Wrapper - NEW */
+	.question-wrapper {
+		position: relative;
+		min-height: 400px;
+		/* Prevent layout shift during transitions */
+		display: flex;
+		align-items: stretch;
+	}
+	
 	/* Question Box */
 	.question-box {
 		background: white;
@@ -512,6 +557,13 @@
 		display: flex;
 		flex-direction: column;
 		position: relative;
+		width: 100%;
+		/* Optimize for animations */
+		will-change: opacity, transform;
+		transform: translateZ(0);
+		-webkit-transform: translateZ(0);
+		backface-visibility: hidden;
+		-webkit-backface-visibility: hidden;
 	}
 	
 	.question {
@@ -547,6 +599,11 @@
 		line-height: var(--leading-relaxed);
 		color: #374151;
 		letter-spacing: var(--tracking-normal);
+		-webkit-tap-highlight-color: transparent;
+		/* Optimize for animations */
+		will-change: transform, background-color, border-color;
+		transform: translateZ(0);
+		-webkit-transform: translateZ(0);
 	}
 	
 	.answer-btn:hover:not(.disabled) {
@@ -580,6 +637,10 @@
 		text-align: center;
 		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 		z-index: 10;
+		/* Optimize for animations */
+		will-change: opacity, transform;
+		transform: translateZ(0);
+		-webkit-transform: translateZ(0);
 	}
 	
 	.reaction-box.critical {
@@ -707,6 +768,7 @@
 		cursor: pointer;
 		transition: all 0.2s;
 		font-size: 0.9375rem;
+		-webkit-tap-highlight-color: transparent;
 	}
 	
 	.btn-share {
@@ -737,6 +799,10 @@
 		
 		.start-card {
 			padding: 2rem 1.5rem;
+		}
+		
+		.question-wrapper {
+			min-height: 380px;
 		}
 		
 		.question-box {
@@ -777,6 +843,11 @@
 		
 		.top-section {
 			padding: 0.75rem;
+			min-height: 90px;
+		}
+		
+		.question-wrapper {
+			min-height: 340px;
 		}
 		
 		.question-box {
@@ -801,6 +872,18 @@
 			bottom: 1rem;
 			left: 1rem;
 			right: 1rem;
+		}
+	}
+	
+	/* Reduce motion for accessibility */
+	@media (prefers-reduced-motion: reduce) {
+		.quiz-page,
+		.question-box,
+		.answer-btn,
+		.reaction-box,
+		.progress-fill {
+			transition: none !important;
+			animation: none !important;
 		}
 	}
 </style>

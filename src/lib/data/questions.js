@@ -9,509 +9,509 @@ export const questions = [
 		answers: [
 			{
 				text: "Great! Let's watch the game then.",
-				anger: 45,
+				anger: 15,
 				reaction: "Oh sweetie, 'fine' NEVER means fine! 📺💔"
 			},
 			{
-				text: "I know that tone. Come here, let's talk about what's really bothering you.",
-				anger: -10,
-				reaction: "You actually learned her language! She's impressed! 💕"
+				text: "You don't look fine. What's wrong?",
+				anger: 8,
+				reaction: "Now she's mad that she looks upset! Thanks! 😤"
 			},
 			{
-				text: "Are you sure? You seem upset about something.",
-				anger: 15,
-				reaction: "At least you noticed, but now she's annoyed you're pushing! 🙄"
+				text: "Is this about something I did?",
+				anger: 10,
+				reaction: "So you DID do something wrong! Guilty conscience much? 🤨"
 			},
 			{
-				text: "*Silently make her favorite tea and sit beside her*",
-				anger: -15,
-				reaction: "Actions over words. She feels understood! 🍵💗"
+				text: "*Pretend you didn't hear and slowly back away*",
+				anger: 12,
+				reaction: "Oh, so now you're IGNORING her? Bold strategy! 🙄"
 			}
 		]
 	},
 	{
 		id: 2,
-		question: "How do I look in this outfit?",
+		question: "Do I look fat in this?",
 		category: "appearance",
 		answers: [
 			{
-				text: "The color really brings out your eyes, but I think the black one from last week suits your style better.",
-				anger: -8,
-				reaction: "Specific, thoughtful, and you remember her outfits! 👗✨"
+				text: "No, you look perfect!",
+				anger: 7,
+				reaction: "That was too fast! You didn't even look! 😠"
 			},
 			{
-				text: "You look amazing! Wait, turn around... Yeah, stunning!",
+				text: "*Pause to think* ...No, honey.",
+				anger: 14,
+				reaction: "YOU HAD TO THINK ABOUT IT?! 😤"
+			},
+			{
+				text: "You look beautiful in everything!",
+				anger: 9,
+				reaction: "That's not what she asked! Answer the question! 🙄"
+			},
+			{
+				text: "That dress doesn't do you justice. Try the blue one?",
 				anger: 12,
-				reaction: "Generic enthusiasm. Did you even look properly? 😊"
-			},
-			{
-				text: "It's nice, but maybe try something else?",
-				anger: 35,
-				reaction: "NICE?! Just nice?! And now she has to change?! 😤"
-			},
-			{
-				text: "You'd look beautiful in a potato sack, but this dress makes you look like a goddess.",
-				anger: 8,
-				reaction: "Smooth talker, but she wanted honest feedback! 🙄"
+				reaction: "So it DOES make her look fat! Thanks a lot! 😡"
 			}
 		]
 	},
 	{
 		id: 3,
-		question: "Sarah just broke up with her boyfriend. I'm going to her place. Coming?",
+		question: "My best friend Sarah is having relationship problems again.",
 		category: "social",
 		answers: [
 			{
-				text: "I'll drive you there and pick up ice cream on the way. Text me when you need me.",
-				anger: -12,
-				reaction: "Perfect balance of support without intruding! 🚗🍦"
+				text: "She should just dump him already.",
+				anger: 10,
+				reaction: "Don't talk about her friends like that! Rude! 😒"
 			},
 			{
-				text: "Do you want me to come for support, or is this a girls-only thing?",
-				anger: -5,
-				reaction: "Emotionally intelligent question! You get it! 💭"
+				text: "That's tough. How can you help her?",
+				anger: 5,
+				reaction: "Why is she suddenly Sarah's therapist?! 🙄"
 			},
 			{
-				text: "Again? This is the third time this month...",
-				anger: 28,
-				reaction: "Insensitive! Her bestie needs support, not judgment! 😒"
+				text: "Didn't she just get back with him last week?",
+				anger: 12,
+				reaction: "Stop keeping track of her friend's drama! Creepy! 😠"
 			},
 			{
-				text: "Can't you just call her? I had plans...",
-				anger: 42,
-				reaction: "Selfish AND dismissive of female friendships! 😠"
+				text: "*Heavy sigh* Here we go again...",
+				anger: 14,
+				reaction: "Her friends are NOT a burden! How dare you! 😤"
 			}
 		]
 	},
 	{
 		id: 4,
-		question: "My ex just texted me. What should I do?",
+		question: "I ran into my ex at Starbucks today.",
 		category: "trust",
 		answers: [
 			{
-				text: "Block them immediately!",
-				anger: 20,
-				reaction: "Possessive much? She can handle it herself! 🚫"
+				text: "Which ex? The tall one?",
+				anger: 12,
+				reaction: "Why do you remember her ex's height?! 🤨"
 			},
 			{
-				text: "What did they say? How do you feel about it?",
-				anger: -8,
-				reaction: "Mature response! You trust her and care about her feelings! 💬"
+				text: "Oh. How was that?",
+				anger: 7,
+				reaction: "Too casual! Show some concern! 😒"
 			},
 			{
-				text: "Your ex? Which one? The gym guy?",
-				anger: 25,
-				reaction: "Why do you remember her ex's hobbies?! Sus... 🤔"
+				text: "What?! What did they want?!",
+				anger: 10,
+				reaction: "Jealous much? It was just Starbucks! 🙄"
 			},
 			{
-				text: "That's weird. Want me to look at it with you?",
-				anger: -3,
-				reaction: "Supportive without being controlling. Good job! 👥"
+				text: "I hope you didn't talk to them.",
+				anger: 9,
+				reaction: "Controlling! She can talk to whoever she wants! 😤"
 			}
 		]
 	},
 	{
 		id: 5,
-		question: "I think your friend Jake has a crush on me.",
-		category: "jealousy",
+		question: "Your mom just called me while you were out.",
+		category: "family",
 		answers: [
 			{
-				text: "Well, I can't blame him. You're incredible.",
-				anger: -5,
-				reaction: "Confident and complimentary! No jealousy detected! 😎"
+				text: "Oh god, what did she say now?",
+				anger: 8,
+				reaction: "Way to throw mom under the bus! 😠"
 			},
 			{
-				text: "Should I talk to him about boundaries?",
-				anger: 15,
-				reaction: "A bit territorial, but she can handle Jake herself! 💪"
+				text: "That's nice! You two are bonding!",
+				anger: 10,
+				reaction: "Nice?! Your mom called to complain about her! 😤"
 			},
 			{
-				text: "Jake? No way, you're imagining things.",
-				anger: 30,
-				reaction: "Dismissing her instincts? She knows when someone's interested! 😤"
+				text: "I'll talk to her about boundaries.",
+				anger: 6,
+				reaction: "Or you could just defend your girlfriend! 🙄"
 			},
 			{
-				text: "That must be uncomfortable. How do you want to handle it?",
-				anger: -10,
-				reaction: "Perfect! Acknowledging her feelings and letting her lead! 🌟"
+				text: "Just ignore her, she means well.",
+				anger: 12,
+				reaction: "IGNORE her?! That's your solution?! 😡"
 			}
 		]
 	},
 	{
 		id: 6,
-		question: "My mom thinks you're too skinny/fat/loud/quiet.",
-		category: "family",
+		question: "I think we should talk about our anniversary plans.",
+		category: "memory",
 		answers: [
 			{
-				text: "I'm sorry she said that. Her opinion doesn't change how perfect you are to me.",
-				anger: -15,
-				reaction: "Defending her while staying diplomatic! Boyfriend goals! 💕"
+				text: "Already? Isn't that in a few months?",
+				anger: 14,
+				reaction: "A FEW MONTHS?! It's next week! 😤"
 			},
 			{
-				text: "She's probably just concerned about you.",
-				anger: 35,
-				reaction: "You're taking MOM'S side?! Traitor! 😠"
+				text: "Of course! What were you thinking?",
+				anger: 8,
+				reaction: "So you forgot and have no plans. Cool. 😒"
 			},
 			{
-				text: "Well, moms will be moms! Haha...",
-				anger: 25,
-				reaction: "Dismissive laughter? This hurt her feelings! 😔"
+				text: "I've already made reservations!",
+				anger: 10,
+				reaction: "Without asking her first?! How thoughtful! 🙄"
 			},
 			{
-				text: "That was inappropriate of her. Want me to talk to her, or would you prefer to handle it?",
-				anger: -8,
-				reaction: "Standing up for her while respecting her autonomy! 🛡️"
+				text: "Anniversary of... what exactly?",
+				anger: 18,
+				reaction: "ARE YOU SERIOUS RIGHT NOW?! 🤬"
 			}
 		]
 	},
 	{
 		id: 7,
-		question: "I dreamt you cheated on me last night.",
-		category: "dreams",
+		question: "I'm thinking about cutting my hair really short.",
+		category: "appearance",
 		answers: [
 			{
-				text: "That sounds really upsetting. Come here, let me hold you.",
-				anger: -12,
-				reaction: "Validating her emotions even from a dream! Emotional IQ 💯"
+				text: "But I love your long hair!",
+				anger: 12,
+				reaction: "It's HER hair, not yours! 😤"
 			},
 			{
-				text: "It was just a dream! I would never do that!",
-				anger: 18,
-				reaction: "Defensive response to a DREAM? Suspicious... 🤨"
+				text: "That would look amazing on you!",
+				anger: 7,
+				reaction: "So you don't like her current hair?! 😠"
 			},
 			{
-				text: "That's crazy, dreams don't mean anything.",
-				anger: 28,
-				reaction: "Calling her crazy AND dismissing her feelings? Bad move! 😤"
+				text: "How short are we talking?",
+				anger: 8,
+				reaction: "Why does it matter? Not supportive! 🙄"
 			},
 			{
-				text: "Dream me is an idiot. Real me knows I won the lottery with you.",
-				anger: -5,
-				reaction: "Humor + reassurance = winning combo! 😄"
+				text: "It's your hair, do what makes you happy.",
+				anger: 10,
+				reaction: "She wanted your OPINION, not permission! 😒"
 			}
 		]
 	},
 	{
 		id: 8,
-		question: "Which of my friends do you think is the prettiest?",
+		question: "Did you notice anything different about me?",
 		category: "trap",
 		answers: [
 			{
-				text: "They're all pretty in different ways, but none of them catch my attention like you do.",
-				anger: -8,
-				reaction: "Diplomatic AND romantic! Well played! 💕"
+				text: "Your hair looks great!",
+				anger: 10,
+				reaction: "She didn't touch her hair. Try again! 😤"
 			},
 			{
-				text: "I honestly don't think about your friends that way.",
-				anger: -3,
-				reaction: "Simple, honest, direct. She believes you! ✅"
+				text: "New dress?",
+				anger: 12,
+				reaction: "She's worn this dress 10 times! Pay attention! 😠"
 			},
 			{
-				text: "Why are you asking me this? It's a trap!",
-				anger: 22,
-				reaction: "Calling it a trap makes it worse! Just answer! 🙄"
+				text: "You look extra beautiful today?",
+				anger: 8,
+				reaction: "Generic compliment = you noticed nothing! 🙄"
 			},
 			{
-				text: "Probably Emma, she's got that model look.",
-				anger: 40,
-				reaction: "You answered WAY too fast and specific! 😡"
+				text: "*Panic scanning* Um... new earrings?",
+				anger: 14,
+				reaction: "The panic in your eyes says everything! 😒"
 			}
 		]
 	},
 	{
 		id: 9,
-		question: "I've been thinking about our future...",
-		category: "serious",
+		question: "My friend Emma just got engaged!",
+		category: "future",
 		answers: [
 			{
-				text: "Me too. What specifically have you been thinking about?",
-				anger: -10,
-				reaction: "Open, engaged, and ready for serious talk! 💑"
+				text: "That's great! Good for her!",
+				anger: 7,
+				reaction: "That's it? No thoughts about US? 🙄"
 			},
 			{
-				text: "*Visible panic* Our future? Like... marriage?",
-				anger: 20,
-				reaction: "The panic in your eyes says everything! 😰"
+				text: "Already? They've only been dating a year!",
+				anger: 12,
+				reaction: "We've been dating for THREE years... 😤"
 			},
 			{
-				text: "Can we talk about this later? The game is on.",
-				anger: 45,
-				reaction: "THE GAME?! She's talking about your FUTURE! 📺😤"
+				text: "Wow, everyone's getting married lately...",
+				anger: 10,
+				reaction: "Everyone except her, apparently! 😠"
 			},
 			{
-				text: "I love thinking about our future. Tell me your thoughts.",
-				anger: -7,
-				reaction: "Enthusiastic and supportive! Green flag! 💚"
+				text: "*Nervous laughter* That's... that's nice...",
+				anger: 14,
+				reaction: "Your fear of commitment is showing! 😒"
 			}
 		]
 	},
 	{
 		id: 10,
-		question: "I feel like you love your PlayStation more than me.",
-		category: "priorities",
+		question: "Can you pick up some things from the store?",
+		category: "domestic",
 		answers: [
 			{
-				text: "I'm sorry you feel that way. Let's plan something special together.",
-				anger: -5,
-				reaction: "Acknowledging her feelings and offering solutions! 🎮❤️"
+				text: "Sure! Text me a list.",
+				anger: 5,
+				reaction: "She has to do EVERYTHING, even make the list?! 😤"
 			},
 			{
-				text: "That's ridiculous! I only play like 4 hours a day!",
-				anger: 30,
-				reaction: "ONLY 4 hours?! You just proved her point! 🎮"
+				text: "Can't you just order delivery?",
+				anger: 12,
+				reaction: "Too lazy to help with ONE thing?! 😠"
 			},
 			{
-				text: "You're right, I have been gaming too much. What would you like to do together?",
-				anger: -12,
-				reaction: "Accountability AND initiative! Mature response! 🌟"
+				text: "I just went yesterday!",
+				anger: 10,
+				reaction: "Once a week is too much? Really?! 🙄"
 			},
 			{
-				text: "Come on, you know that's not true... right?",
-				anger: 18,
-				reaction: "Weak denial. Put down the controller! 🙄"
+				text: "What things? Be specific.",
+				anger: 8,
+				reaction: "You know what she needs! You live here too! 😒"
 			}
 		]
 	},
 	{
 		id: 11,
-		question: "We need to talk about your female coworker...",
-		category: "jealousy",
+		question: "Why don't you ever take photos of me?",
+		category: "attention",
 		answers: [
 			{
-				text: "What about her? Has something made you uncomfortable?",
-				anger: -8,
-				reaction: "Direct, open, and focused on her feelings! 💼"
+				text: "I do! Check my phone!",
+				anger: 10,
+				reaction: "Those 3 blurry photos from last year don't count! 😤"
 			},
 			{
-				text: "There's nothing going on! She's just a colleague!",
-				anger: 25,
-				reaction: "Too defensive! She didn't even accuse you yet! 😒"
+				text: "You always say you look bad in photos.",
+				anger: 12,
+				reaction: "So you AGREE she looks bad?! Wow! 😠"
 			},
 			{
-				text: "You mean Lisa? What about her?",
-				anger: 15,
-				reaction: "Oh, so you know exactly who she means? Interesting... 🤔"
+				text: "I prefer living in the moment.",
+				anger: 8,
+				reaction: "That's a fancy way of saying you don't care! 🙄"
 			},
 			{
-				text: "I understand why you might feel concerned. Let's talk about boundaries that make you comfortable.",
-				anger: -15,
-				reaction: "Empathetic AND proactive! Relationship expert! 💑"
+				text: "Want me to take one now?",
+				anger: 6,
+				reaction: "NOW?! When she's not ready?! No! 😒"
 			}
 		]
 	},
 	{
 		id: 12,
-		question: "Rate my cooking from 1-10.",
-		category: "honesty",
+		question: "Do you think Jessica is pretty?",
+		category: "trap",
 		answers: [
 			{
-				text: "Solid 8! The seasoning was perfect, maybe just cook the pasta 1 minute less next time.",
-				anger: -10,
-				reaction: "Specific, helpful feedback with compliments! Chef's kiss! 👨‍🍳"
+				text: "Who's Jessica?",
+				anger: 8,
+				reaction: "The girl you stare at every Monday at the gym! 😤"
 			},
 			{
-				text: "10 out of 10! Best meal ever!",
+				text: "Not as pretty as you!",
+				anger: 10,
+				reaction: "So she IS pretty, just LESS pretty?! 😠"
+			},
+			{
+				text: "I honestly never noticed.",
 				anger: 12,
-				reaction: "She burnt the rice. Stop lying! 🙄"
+				reaction: "LIAR! She sits right across from you at work! 🙄"
 			},
 			{
-				text: "Umm... 6? But I appreciate the effort!",
-				anger: 25,
-				reaction: "Only a 6?! She slaved over that stove! 😤"
-			},
-			{
-				text: "The flavor was amazing - easily a 9! Just needed a bit more salt for my taste.",
-				anger: -5,
-				reaction: "Honest but encouraging! You're learning! 🧂"
+				text: "Why are you asking me this?",
+				anger: 7,
+				reaction: "Deflecting! Just answer the question! 😒"
 			}
 		]
 	},
 	{
 		id: 13,
-		question: "My period is late...",
-		category: "serious",
+		question: "We never go out anymore.",
+		category: "priorities",
 		answers: [
 			{
-				text: "Okay. How are you feeling? Do you want to take a test together?",
-				anger: -15,
-				reaction: "Calm, supportive, and using 'together'. Husband material! 💑"
+				text: "We went out last week!",
+				anger: 9,
+				reaction: "Once a week isn't enough! Try harder! 😤"
 			},
 			{
-				text: "WHAT?! But we were careful!",
-				anger: 35,
-				reaction: "Your panic is NOT helping right now! 😰"
+				text: "Let's plan something this weekend!",
+				anger: 7,
+				reaction: "She has to tell you to plan dates?! 🙄"
 			},
 			{
-				text: "How late? Isn't that normal sometimes?",
-				anger: 20,
-				reaction: "Minimizing her concern? She knows her body! 🙄"
+				text: "But we're saving money, remember?",
+				anger: 11,
+				reaction: "So money is more important than her happiness? 😠"
 			},
 			{
-				text: "*Hold her hand* Whatever happens, we'll face it together.",
-				anger: -12,
-				reaction: "Perfect response. She feels supported! 🤝"
+				text: "Where would you like to go?",
+				anger: 8,
+				reaction: "YOU should be planning romantic surprises! 😒"
 			}
 		]
 	},
 	{
 		id: 14,
-		question: "Do you even listen when I talk?",
-		category: "attention",
+		question: "Do you remember what I told you yesterday?",
+		category: "memory",
 		answers: [
 			{
-				text: "I try to, but I know I can do better. What did I miss?",
-				anger: -8,
-				reaction: "Admitting fault and wanting to improve! Growth mindset! 📈"
+				text: "Of course! About your... thing?",
+				anger: 12,
+				reaction: "Her THING?! It was important! 😤"
 			},
 			{
-				text: "Of course I do! You were just talking about... um...",
-				anger: 28,
-				reaction: "The 'um' gave you away! Busted! 😤"
+				text: "Yesterday was crazy, remind me?",
+				anger: 10,
+				reaction: "Too crazy to listen to your girlfriend? 😠"
 			},
 			{
-				text: "Sorry, can you repeat that? I was distracted.",
-				anger: 35,
-				reaction: "You just proved her point! Pay attention! 🙄"
+				text: "The work drama with your boss?",
+				anger: 14,
+				reaction: "That was LAST WEEK! You never listen! 🙄"
 			},
 			{
-				text: "You're right, I was distracted. You deserve my full attention. Please, tell me again.",
-				anger: -5,
-				reaction: "Owning it and making amends. Respectful! 👂"
+				text: "*Confident* About Sarah's birthday party!",
+				anger: 9,
+				reaction: "Wrong, but at least you tried? Still mad though. 😒"
 			}
 		]
 	},
 	{
 		id: 15,
-		question: "Why don't you post pictures of us anymore?",
-		category: "social",
+		question: "What would you do if I got pregnant right now?",
+		category: "serious",
 		answers: [
 			{
-				text: "You're right, I should. Let's take a selfie right now!",
-				anger: -10,
-				reaction: "Action-oriented response! She likes the enthusiasm! 📸"
+				text: "Is... is this hypothetical?",
+				anger: 8,
+				reaction: "Way to dodge the question! Answer it! 😤"
 			},
 			{
-				text: "I'm just not really into social media lately.",
-				anger: 20,
-				reaction: "But you posted your lunch yesterday... 🤨"
+				text: "We'd figure it out together!",
+				anger: 6,
+				reaction: "That's vague! What does that mean?! 🙄"
 			},
 			{
-				text: "Do I have to broadcast our relationship to everyone?",
-				anger: 30,
-				reaction: "Are you ashamed of her?! Red flag! 🚩"
+				text: "But we're not ready!",
+				anger: 12,
+				reaction: "So you'd panic? Not reassuring! 😠"
 			},
 			{
-				text: "I've been keeping our moments private, but if it's important to you, I'd love to share more.",
-				anger: -5,
-				reaction: "Explaining while validating her needs! Smooth! 💕"
+				text: "*Visible panic* Right NOW?!",
+				anger: 14,
+				reaction: "Your face just told her everything! 😒"
 			}
 		]
 	},
 	{
 		id: 16,
-		question: "Your mom called me fat in a 'caring' way.",
+		question: "My mother wants us to visit this weekend.",
 		category: "family",
 		answers: [
 			{
-				text: "That's completely unacceptable. I'll talk to her right now.",
-				anger: -15,
-				reaction: "Immediate defense mode! Her hero! 🦸‍♂️"
+				text: "Again? We just saw her!",
+				anger: 11,
+				reaction: "Family is important! Stop complaining! 😤"
 			},
 			{
-				text: "She means well, she's just old-fashioned.",
-				anger: 40,
-				reaction: "Making excuses for mom? Wrong team, buddy! 😡"
+				text: "Sure, what time?",
+				anger: 6,
+				reaction: "No enthusiasm? Her family matters! 🙄"
 			},
 			{
-				text: "I'm so sorry. You're perfect and she had no right. How can I support you?",
-				anger: -12,
-				reaction: "Apologizing, affirming, and asking how to help! 💯"
+				text: "Can we make it a short visit?",
+				anger: 9,
+				reaction: "Already planning your escape? Rude! 😠"
 			},
 			{
-				text: "What exactly did she say? That doesn't sound like her.",
-				anger: 25,
-				reaction: "Questioning HER story? Whose side are you on?! 😒"
+				text: "I actually had plans...",
+				anger: 12,
+				reaction: "Plans more important than her family?! 😒"
 			}
 		]
 	},
 	{
 		id: 17,
-		question: "I think we should work out together!",
-		category: "fitness",
+		question: "Am I overreacting?",
+		category: "trap",
 		answers: [
 			{
-				text: "I'd love that! What kind of workouts are you thinking?",
-				anger: -8,
-				reaction: "Enthusiastic participation! Couple goals! 💪"
+				text: "No, your feelings are valid.",
+				anger: 8,
+				reaction: "So you DO think she's overreacting! 😤"
 			},
 			{
-				text: "But you'll slow me down... I mean, we're at different levels.",
-				anger: 35,
-				reaction: "Basically called her weak. Motivating! NOT! 😤"
+				text: "Maybe a little bit?",
+				anger: 15,
+				reaction: "A LITTLE BIT?! How dare you! 😠"
 			},
 			{
-				text: "Sure! Fair warning though - I'll probably complain the whole time.",
-				anger: 5,
-				reaction: "At least you're honest about being whiny! 😅"
+				text: "What makes you think that?",
+				anger: 9,
+				reaction: "Deflecting! Just say she's not! 🙄"
 			},
 			{
-				text: "Great idea! We can motivate each other. Gym dates could be fun!",
-				anger: -10,
-				reaction: "Positive and seeing it as quality time! Perfect! 🏃‍♀️"
+				text: "You? Overreact? Never!",
+				anger: 11,
+				reaction: "The sarcasm is NOT appreciated! 😒"
 			}
 		]
 	},
 	{
 		id: 18,
-		question: "I'm thinking about cutting all my hair off.",
-		category: "appearance",
+		question: "Should I text him back?",
+		category: "jealousy",
 		answers: [
 			{
-				text: "Your hair, your choice! You'll look amazing either way.",
-				anger: -5,
-				reaction: "Supportive of her autonomy! Good answer! ✂️"
+				text: "Who's 'him'?",
+				anger: 7,
+				reaction: "You should know who she's talking about! 😤"
 			},
 			{
-				text: "NOOOO! I love your long hair! Please don't!",
-				anger: 30,
-				reaction: "It's HER hair! Stop being controlling! 😡"
+				text: "If you want to?",
+				anger: 10,
+				reaction: "Show some backbone! Have an opinion! 🙄"
 			},
 			{
-				text: "That's a big change. What's making you want to do it?",
-				anger: -8,
-				reaction: "Interested in her feelings behind the decision! Thoughtful! 💭"
-			},
-			{
-				text: "Do whatever makes you happy, babe.",
+				text: "Why is he texting you?",
 				anger: 12,
-				reaction: "Too passive! She wanted your actual opinion! 🤷"
+				reaction: "Jealous AND controlling? Attractive! 😠"
+			},
+			{
+				text: "I don't think you should.",
+				anger: 9,
+				reaction: "She can make her own decisions! 😒"
 			}
 		]
 	},
 	{
 		id: 19,
-		question: "My best friend doesn't like you.",
-		category: "social",
+		question: "I had the worst day at work.",
+		category: "support",
 		answers: [
 			{
-				text: "That's tough. Have I done something to upset her?",
-				anger: -10,
-				reaction: "Mature response! Looking for solutions! 🤝"
+				text: "What happened?",
+				anger: 5,
+				reaction: "Finally asking 10 minutes later? 🙄"
 			},
 			{
-				text: "Well, I don't like her either!",
-				anger: 30,
-				reaction: "Attacking her bestie? Bad strategy! 😤"
+				text: "At least you have a job!",
+				anger: 14,
+				reaction: "Way to minimize her feelings! 😤"
 			},
 			{
-				text: "Why are you telling me this?",
-				anger: 20,
-				reaction: "Defensive instead of addressing the issue! 🙄"
+				text: "Want to talk about it?",
+				anger: 7,
+				reaction: "Obviously! Why else would she bring it up?! 😠"
 			},
 			{
-				text: "I'm sorry to hear that. Maybe we could all hang out and she'll see the real me?",
-				anger: -12,
-				reaction: "Proactive problem-solving! Emotional maturity! 🌟"
+				text: "Tomorrow will be better!",
+				anger: 11,
+				reaction: "Toxic positivity! Let her vent! 😒"
 			}
 		]
 	},
@@ -521,159 +521,159 @@ export const questions = [
 		category: "love",
 		answers: [
 			{
-				text: "I love you too, more than words can say.",
-				anger: -15,
-				reaction: "Perfect response! Her heart melted! 💕"
+				text: "Love you too!",
+				anger: 6,
+				reaction: "Where's the 'I'? Lazy response! 🙄"
 			},
 			{
-				text: "Thanks!",
-				anger: 45,
+				text: "Aww, thanks babe!",
+				anger: 15,
 				reaction: "THANKS?! She said she LOVES you! 💔"
 			},
 			{
-				text: "Love you too.",
+				text: "*Kiss her instead of responding*",
 				anger: 8,
-				reaction: "A bit casual for her heartfelt confession! 😐"
+				reaction: "Use your words! She needs to hear it! 😤"
 			},
 			{
-				text: "*Pull her close* You're everything to me. I love you so much.",
-				anger: -18,
-				reaction: "Actions + words = complete meltdown! 🫠"
+				text: "I know.",
+				anger: 12,
+				reaction: "Okay Han Solo, how romantic! 😠"
 			}
 		]
 	},
 	{
 		id: 21,
-		question: "Do you think marriage is important?",
-		category: "future",
+		question: "What are you thinking about?",
+		category: "attention",
 		answers: [
 			{
-				text: "For us? Absolutely. I can't imagine my future without you in it.",
-				anger: -12,
-				reaction: "Direct, romantic, and committed! Ring shopping time? 💍"
+				text: "Nothing.",
+				anger: 10,
+				reaction: "How can you think about NOTHING?! 😤"
 			},
 			{
-				text: "It's just a piece of paper, really.",
-				anger: 35,
-				reaction: "Way to kill the romance! She's reconsidering everything! 😒"
+				text: "Just work stuff.",
+				anger: 8,
+				reaction: "Always thinking about work, never her! 🙄"
 			},
 			{
-				text: "I think it's important when you're with the right person.",
-				anger: 5,
-				reaction: "Safe answer, but is SHE the right person?! 🤔"
+				text: "How beautiful you are!",
+				anger: 7,
+				reaction: "Too cheesy! What were you REALLY thinking? 😒"
 			},
 			{
-				text: "Why? Are you thinking about it? Because I definitely am.",
-				anger: -10,
-				reaction: "Turning it around positively! She's blushing! 😊"
+				text: "The game later.",
+				anger: 12,
+				reaction: "THE GAME?! While cuddling with her?! 😠"
 			}
 		]
 	},
 	{
 		id: 22,
-		question: "I saw you looking at that girl.",
+		question: "Do you think we spend too much time together?",
 		category: "trap",
 		answers: [
 			{
-				text: "You're right, I glanced. I'm sorry, that was disrespectful.",
-				anger: -5,
-				reaction: "Honest accountability! She appreciates the maturity! ✅"
+				text: "No! I love our time together!",
+				anger: 6,
+				reaction: "That was too quick. Be honest! 🙄"
 			},
 			{
-				text: "What girl? I wasn't looking at anyone!",
-				anger: 25,
-				reaction: "Gaslighting won't work! She SAW you! 👀"
+				text: "Sometimes we could use space...",
+				anger: 13,
+				reaction: "So she's CLINGY now?! Wow! 😤"
 			},
 			{
-				text: "I was looking at her weird shirt, not her!",
-				anger: 20,
-				reaction: "Sure, her 'shirt'. Nice try! 🙄"
+				text: "Why? Do YOU think that?",
+				anger: 9,
+				reaction: "Don't turn this around on her! 😠"
 			},
 			{
-				text: "I notice people, but I only have eyes for you. I'll be more mindful.",
-				anger: -8,
-				reaction: "Honest but reassuring. Good recovery! 💕"
+				text: "Quality over quantity, right?",
+				anger: 11,
+				reaction: "So the quantity is too much? Thanks! 😒"
 			}
 		]
 	},
 	{
 		id: 23,
-		question: "Should I quit my job?",
-		category: "support",
+		question: "I think your friend Jake likes me.",
+		category: "jealousy",
 		answers: [
 			{
-				text: "What's making you consider it? Let's talk through the pros and cons.",
-				anger: -10,
-				reaction: "Supportive without pushing an agenda! Perfect partner! 📊"
+				text: "Jake's always been weird.",
+				anger: 8,
+				reaction: "Don't insult her admirers! Jealous much? 😤"
 			},
 			{
-				text: "In this economy? That's crazy!",
-				anger: 30,
-				reaction: "Dismissing her feelings AND calling her crazy! 😤"
+				text: "Can't blame him!",
+				anger: 6,
+				reaction: "So you're okay with this?! 🙄"
 			},
 			{
-				text: "If it's making you unhappy, your mental health comes first.",
-				anger: -8,
-				reaction: "Prioritizing her wellbeing! Keeper energy! 💚"
+				text: "I'll talk to him.",
+				anger: 11,
+				reaction: "Territorial much? She can handle it! 😠"
 			},
 			{
-				text: "But you just got promoted!",
-				anger: 18,
-				reaction: "Money isn't everything! Listen to her concerns! 💰"
+				text: "Are you sure?",
+				anger: 9,
+				reaction: "Questioning her intuition? She KNOWS! 😒"
 			}
 		]
 	},
 	{
 		id: 24,
-		question: "What would you do if I got pregnant right now?",
-		category: "serious",
+		question: "We should work out together!",
+		category: "fitness",
 		answers: [
 			{
-				text: "We'd figure it out together. You wouldn't be alone in this.",
-				anger: -12,
-				reaction: "Reassuring and partnership-focused! Daddy material! 👶"
+				text: "But you hate the gym?",
+				anger: 10,
+				reaction: "She's trying! Be supportive! 😤"
 			},
 			{
-				text: "Right NOW? We're not ready!",
-				anger: 25,
-				reaction: "Way to make her feel secure! Panic mode activated! 😰"
+				text: "I like working out alone...",
+				anger: 12,
+				reaction: "Too good to exercise with her? 😠"
 			},
 			{
-				text: "Whatever you decided, I'd support you completely.",
-				anger: -10,
-				reaction: "Respecting her choice while being supportive! Mature! 💕"
+				text: "Sure! When do you want to start?",
+				anger: 5,
+				reaction: "Tomorrow? That's too soon! 🙄"
 			},
 			{
-				text: "Is this your way of telling me something?",
-				anger: 15,
-				reaction: "Deflecting a hypothetical? Just answer the question! 🙄"
+				text: "We could try yoga instead?",
+				anger: 8,
+				reaction: "Why? Think she can't handle real exercise? 😒"
 			}
 		]
 	},
 	{
 		id: 25,
-		question: "Am I the best you've ever had?",
-		category: "trap",
+		question: "How many kids do you want?",
+		category: "future",
 		answers: [
 			{
-				text: "You're not just the best, you're in a league of your own.",
-				anger: -10,
-				reaction: "Smooth AND avoiding comparisons! Expert level! 🏆"
+				text: "Whoa, let's slow down!",
+				anger: 12,
+				reaction: "It's a normal question! Why panic?! 😤"
 			},
 			{
-				text: "Do we really need to talk about exes?",
-				anger: 20,
-				reaction: "Dodging means the answer is no! 😒"
+				text: "How many do YOU want?",
+				anger: 8,
+				reaction: "She asked first! Stop deflecting! 🙄"
 			},
 			{
-				text: "Honestly? You're incredible but different from past relationships.",
-				anger: 15,
-				reaction: "Different? So others were better at some things?! 🤔"
+				text: "Two seems nice?",
+				anger: 6,
+				reaction: "She wants three. You'd know if you listened! 😠"
 			},
 			{
-				text: "Every day with you sets a new record for best ever.",
-				anger: -8,
-				reaction: "Cheesy but effective! She's smiling! 😊"
+				text: "Kids? In THIS economy?",
+				anger: 10,
+				reaction: "Way to kill the romance with reality! 😒"
 			}
 		]
 	}
@@ -709,5 +709,6 @@ export const categories = {
 	fitness: "Health & Fitness",
 	love: "Love & Romance",
 	future: "Future Planning",
-	support: "Being Supportive"
+	support: "Being Supportive",
+	domestic: "Home Life"
 };

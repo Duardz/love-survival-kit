@@ -4,11 +4,14 @@
 	export let shake = false;
 	export let compact = false;
 	
+	// Clamp anger between 0 and 100
+	$: clampedAnger = Math.max(0, Math.min(100, anger));
+	
 // @ts-ignore
-		$: meterClass = getAngerClass(anger);
-	$: moodEmoji = getMoodEmoji(anger);
-	$: moodText = getMoodText(anger);
-	$: meterColor = getMeterColor(anger);
+		$: meterClass = getAngerClass(clampedAnger);
+	$: moodEmoji = getMoodEmoji(clampedAnger);
+	$: moodText = getMoodText(clampedAnger);
+	$: meterColor = getMeterColor(clampedAnger);
 	
 	// @ts-ignore
 	function getAngerClass(level) {
@@ -59,7 +62,7 @@
 		</div>
 		<div class="meter-display">
 			<span class="meter-emoji">{moodEmoji}</span>
-			<span class="meter-percentage" style="color: {meterColor}">{anger}%</span>
+			<span class="meter-percentage" style="color: {meterColor}">{clampedAnger}%</span>
 		</div>
 	</div>
 	
@@ -68,7 +71,7 @@
 		<div class="meter-track">
 			<div 
 				class="meter-fill" 
-				style="width: {Math.min(anger, 100)}%; background-color: {meterColor}"
+				style="width: {clampedAnger}%; background-color: {meterColor}"
 			>
 				<span class="meter-glow"></span>
 			</div>
@@ -95,7 +98,7 @@
 	</div>
 	
 	<!-- Warning for high anger -->
-	{#if anger >= 80}
+	{#if clampedAnger >= 80}
 		<div class="warning-message">
 			⚠️ Critical anger levels detected! Proceed with extreme caution!
 		</div>
@@ -111,7 +114,8 @@
 		position: relative;
 		overflow: hidden;
 		transition: transform 150ms ease;
-		flex: 1;
+		/* Remove flex: 1 - this was causing the issue! */
+		width: 100%;
 		border: 1px solid #e5e7eb;
 	}
 	
