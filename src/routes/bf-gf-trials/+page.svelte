@@ -241,10 +241,10 @@
 						
 						<div class="result-buttons">
 							<button class="btn-share" on:click={shareResult}>
-								Share Result 📱
+								Share Result
 							</button>
 							<button class="btn-retry" on:click={restart}>
-								Try Again 🔄
+								Try Again
 							</button>
 						</div>
 					</div>
