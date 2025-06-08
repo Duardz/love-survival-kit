@@ -9,22 +9,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Great! Let's watch the game then.",
-				anger: 15,
+				anger: 18,
 				reaction: "Oh sweetie, 'fine' NEVER means fine! 📺💔"
 			},
 			{
 				text: "You don't look fine. What's wrong?",
-				anger: 8,
+				anger: 12,
 				reaction: "Now she's mad that she looks upset! Thanks! 😤"
 			},
 			{
 				text: "Is this about something I did?",
-				anger: 10,
+				anger: 14,
 				reaction: "So you DID do something wrong! Guilty conscience much? 🤨"
 			},
 			{
 				text: "*Pretend you didn't hear and slowly back away*",
-				anger: 12,
+				anger: 16,
 				reaction: "Oh, so now you're IGNORING her? Bold strategy! 🙄"
 			}
 		]
@@ -36,22 +36,22 @@ export const questions = [
 		answers: [
 			{
 				text: "No, you look perfect!",
-				anger: 7,
+				anger: 11,
 				reaction: "That was too fast! You didn't even look! 😠"
 			},
 			{
 				text: "*Pause to think* ...No, honey.",
-				anger: 14,
+				anger: 17,
 				reaction: "YOU HAD TO THINK ABOUT IT?! 😤"
 			},
 			{
 				text: "You look beautiful in everything!",
-				anger: 9,
+				anger: 13,
 				reaction: "That's not what she asked! Answer the question! 🙄"
 			},
 			{
 				text: "That dress doesn't do you justice. Try the blue one?",
-				anger: 12,
+				anger: 15,
 				reaction: "So it DOES make her look fat! Thanks a lot! 😡"
 			}
 		]
@@ -63,22 +63,22 @@ export const questions = [
 		answers: [
 			{
 				text: "She should just dump him already.",
-				anger: 10,
+				anger: 14,
 				reaction: "Don't talk about her friends like that! Rude! 😒"
 			},
 			{
 				text: "That's tough. How can you help her?",
-				anger: 5,
+				anger: 9,
 				reaction: "Why is she suddenly Sarah's therapist?! 🙄"
 			},
 			{
 				text: "Didn't she just get back with him last week?",
-				anger: 12,
+				anger: 16,
 				reaction: "Stop keeping track of her friend's drama! Creepy! 😠"
 			},
 			{
 				text: "*Heavy sigh* Here we go again...",
-				anger: 14,
+				anger: 18,
 				reaction: "Her friends are NOT a burden! How dare you! 😤"
 			}
 		]
@@ -90,22 +90,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Which ex? The tall one?",
-				anger: 12,
+				anger: 16,
 				reaction: "Why do you remember her ex's height?! 🤨"
 			},
 			{
 				text: "Oh. How was that?",
-				anger: 7,
+				anger: 10,
 				reaction: "Too casual! Show some concern! 😒"
 			},
 			{
 				text: "What?! What did they want?!",
-				anger: 10,
+				anger: 14,
 				reaction: "Jealous much? It was just Starbucks! 🙄"
 			},
 			{
 				text: "I hope you didn't talk to them.",
-				anger: 9,
+				anger: 13,
 				reaction: "Controlling! She can talk to whoever she wants! 😤"
 			}
 		]
@@ -117,22 +117,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Oh god, what did she say now?",
-				anger: 8,
+				anger: 12,
 				reaction: "Way to throw mom under the bus! 😠"
 			},
 			{
 				text: "That's nice! You two are bonding!",
-				anger: 10,
+				anger: 14,
 				reaction: "Nice?! Your mom called to complain about her! 😤"
 			},
 			{
 				text: "I'll talk to her about boundaries.",
-				anger: 6,
+				anger: 10,
 				reaction: "Or you could just defend your girlfriend! 🙄"
 			},
 			{
 				text: "Just ignore her, she means well.",
-				anger: 12,
+				anger: 16,
 				reaction: "IGNORE her?! That's your solution?! 😡"
 			}
 		]
@@ -144,22 +144,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Already? Isn't that in a few months?",
-				anger: 14,
+				anger: 18,
 				reaction: "A FEW MONTHS?! It's next week! 😤"
 			},
 			{
 				text: "Of course! What were you thinking?",
-				anger: 8,
+				anger: 11,
 				reaction: "So you forgot and have no plans. Cool. 😒"
 			},
 			{
 				text: "I've already made reservations!",
-				anger: 10,
+				anger: 13,
 				reaction: "Without asking her first?! How thoughtful! 🙄"
 			},
 			{
 				text: "Anniversary of... what exactly?",
-				anger: 18,
+				anger: 22,
 				reaction: "ARE YOU SERIOUS RIGHT NOW?! 🤬"
 			}
 		]
@@ -171,22 +171,22 @@ export const questions = [
 		answers: [
 			{
 				text: "But I love your long hair!",
-				anger: 12,
+				anger: 15,
 				reaction: "It's HER hair, not yours! 😤"
 			},
 			{
 				text: "That would look amazing on you!",
-				anger: 7,
+				anger: 10,
 				reaction: "So you don't like her current hair?! 😠"
 			},
 			{
 				text: "How short are we talking?",
-				anger: 8,
+				anger: 12,
 				reaction: "Why does it matter? Not supportive! 🙄"
 			},
 			{
 				text: "It's your hair, do what makes you happy.",
-				anger: 10,
+				anger: 14,
 				reaction: "She wanted your OPINION, not permission! 😒"
 			}
 		]
@@ -198,22 +198,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Your hair looks great!",
-				anger: 10,
+				anger: 14,
 				reaction: "She didn't touch her hair. Try again! 😤"
 			},
 			{
 				text: "New dress?",
-				anger: 12,
+				anger: 16,
 				reaction: "She's worn this dress 10 times! Pay attention! 😠"
 			},
 			{
 				text: "You look extra beautiful today?",
-				anger: 8,
+				anger: 11,
 				reaction: "Generic compliment = you noticed nothing! 🙄"
 			},
 			{
 				text: "*Panic scanning* Um... new earrings?",
-				anger: 14,
+				anger: 18,
 				reaction: "The panic in your eyes says everything! 😒"
 			}
 		]
@@ -225,22 +225,22 @@ export const questions = [
 		answers: [
 			{
 				text: "That's great! Good for her!",
-				anger: 7,
+				anger: 10,
 				reaction: "That's it? No thoughts about US? 🙄"
 			},
 			{
 				text: "Already? They've only been dating a year!",
-				anger: 12,
+				anger: 16,
 				reaction: "We've been dating for THREE years... 😤"
 			},
 			{
 				text: "Wow, everyone's getting married lately...",
-				anger: 10,
+				anger: 14,
 				reaction: "Everyone except her, apparently! 😠"
 			},
 			{
 				text: "*Nervous laughter* That's... that's nice...",
-				anger: 14,
+				anger: 18,
 				reaction: "Your fear of commitment is showing! 😒"
 			}
 		]
@@ -252,22 +252,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Sure! Text me a list.",
-				anger: 5,
+				anger: 8,
 				reaction: "She has to do EVERYTHING, even make the list?! 😤"
 			},
 			{
 				text: "Can't you just order delivery?",
-				anger: 12,
+				anger: 16,
 				reaction: "Too lazy to help with ONE thing?! 😠"
 			},
 			{
 				text: "I just went yesterday!",
-				anger: 10,
+				anger: 14,
 				reaction: "Once a week is too much? Really?! 🙄"
 			},
 			{
 				text: "What things? Be specific.",
-				anger: 8,
+				anger: 12,
 				reaction: "You know what she needs! You live here too! 😒"
 			}
 		]
@@ -279,22 +279,22 @@ export const questions = [
 		answers: [
 			{
 				text: "I do! Check my phone!",
-				anger: 10,
+				anger: 13,
 				reaction: "Those 3 blurry photos from last year don't count! 😤"
 			},
 			{
 				text: "You always say you look bad in photos.",
-				anger: 12,
+				anger: 16,
 				reaction: "So you AGREE she looks bad?! Wow! 😠"
 			},
 			{
 				text: "I prefer living in the moment.",
-				anger: 8,
+				anger: 11,
 				reaction: "That's a fancy way of saying you don't care! 🙄"
 			},
 			{
 				text: "Want me to take one now?",
-				anger: 6,
+				anger: 9,
 				reaction: "NOW?! When she's not ready?! No! 😒"
 			}
 		]
@@ -306,22 +306,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Who's Jessica?",
-				anger: 8,
+				anger: 11,
 				reaction: "The girl you stare at every Monday at the gym! 😤"
 			},
 			{
 				text: "Not as pretty as you!",
-				anger: 10,
+				anger: 14,
 				reaction: "So she IS pretty, just LESS pretty?! 😠"
 			},
 			{
 				text: "I honestly never noticed.",
-				anger: 12,
+				anger: 16,
 				reaction: "LIAR! She sits right across from you at work! 🙄"
 			},
 			{
 				text: "Why are you asking me this?",
-				anger: 7,
+				anger: 10,
 				reaction: "Deflecting! Just answer the question! 😒"
 			}
 		]
@@ -333,22 +333,22 @@ export const questions = [
 		answers: [
 			{
 				text: "We went out last week!",
-				anger: 9,
+				anger: 13,
 				reaction: "Once a week isn't enough! Try harder! 😤"
 			},
 			{
 				text: "Let's plan something this weekend!",
-				anger: 7,
+				anger: 10,
 				reaction: "She has to tell you to plan dates?! 🙄"
 			},
 			{
 				text: "But we're saving money, remember?",
-				anger: 11,
+				anger: 15,
 				reaction: "So money is more important than her happiness? 😠"
 			},
 			{
 				text: "Where would you like to go?",
-				anger: 8,
+				anger: 11,
 				reaction: "YOU should be planning romantic surprises! 😒"
 			}
 		]
@@ -360,22 +360,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Of course! About your... thing?",
-				anger: 12,
+				anger: 16,
 				reaction: "Her THING?! It was important! 😤"
 			},
 			{
 				text: "Yesterday was crazy, remind me?",
-				anger: 10,
+				anger: 14,
 				reaction: "Too crazy to listen to your girlfriend? 😠"
 			},
 			{
 				text: "The work drama with your boss?",
-				anger: 14,
+				anger: 18,
 				reaction: "That was LAST WEEK! You never listen! 🙄"
 			},
 			{
 				text: "*Confident* About Sarah's birthday party!",
-				anger: 9,
+				anger: 12,
 				reaction: "Wrong, but at least you tried? Still mad though. 😒"
 			}
 		]
@@ -387,22 +387,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Is... is this hypothetical?",
-				anger: 8,
+				anger: 11,
 				reaction: "Way to dodge the question! Answer it! 😤"
 			},
 			{
 				text: "We'd figure it out together!",
-				anger: 6,
+				anger: 9,
 				reaction: "That's vague! What does that mean?! 🙄"
 			},
 			{
 				text: "But we're not ready!",
-				anger: 12,
+				anger: 16,
 				reaction: "So you'd panic? Not reassuring! 😠"
 			},
 			{
 				text: "*Visible panic* Right NOW?!",
-				anger: 14,
+				anger: 18,
 				reaction: "Your face just told her everything! 😒"
 			}
 		]
@@ -414,22 +414,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Again? We just saw her!",
-				anger: 11,
+				anger: 15,
 				reaction: "Family is important! Stop complaining! 😤"
 			},
 			{
 				text: "Sure, what time?",
-				anger: 6,
+				anger: 9,
 				reaction: "No enthusiasm? Her family matters! 🙄"
 			},
 			{
 				text: "Can we make it a short visit?",
-				anger: 9,
+				anger: 13,
 				reaction: "Already planning your escape? Rude! 😠"
 			},
 			{
 				text: "I actually had plans...",
-				anger: 12,
+				anger: 16,
 				reaction: "Plans more important than her family?! 😒"
 			}
 		]
@@ -441,22 +441,22 @@ export const questions = [
 		answers: [
 			{
 				text: "No, your feelings are valid.",
-				anger: 8,
+				anger: 11,
 				reaction: "So you DO think she's overreacting! 😤"
 			},
 			{
 				text: "Maybe a little bit?",
-				anger: 15,
+				anger: 19,
 				reaction: "A LITTLE BIT?! How dare you! 😠"
 			},
 			{
 				text: "What makes you think that?",
-				anger: 9,
+				anger: 13,
 				reaction: "Deflecting! Just say she's not! 🙄"
 			},
 			{
 				text: "You? Overreact? Never!",
-				anger: 11,
+				anger: 15,
 				reaction: "The sarcasm is NOT appreciated! 😒"
 			}
 		]
@@ -468,22 +468,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Who's 'him'?",
-				anger: 7,
+				anger: 10,
 				reaction: "You should know who she's talking about! 😤"
 			},
 			{
 				text: "If you want to?",
-				anger: 10,
+				anger: 14,
 				reaction: "Show some backbone! Have an opinion! 🙄"
 			},
 			{
 				text: "Why is he texting you?",
-				anger: 12,
+				anger: 16,
 				reaction: "Jealous AND controlling? Attractive! 😠"
 			},
 			{
 				text: "I don't think you should.",
-				anger: 9,
+				anger: 12,
 				reaction: "She can make her own decisions! 😒"
 			}
 		]
@@ -495,22 +495,22 @@ export const questions = [
 		answers: [
 			{
 				text: "What happened?",
-				anger: 5,
+				anger: 8,
 				reaction: "Finally asking 10 minutes later? 🙄"
 			},
 			{
 				text: "At least you have a job!",
-				anger: 14,
+				anger: 18,
 				reaction: "Way to minimize her feelings! 😤"
 			},
 			{
 				text: "Want to talk about it?",
-				anger: 7,
+				anger: 10,
 				reaction: "Obviously! Why else would she bring it up?! 😠"
 			},
 			{
 				text: "Tomorrow will be better!",
-				anger: 11,
+				anger: 15,
 				reaction: "Toxic positivity! Let her vent! 😒"
 			}
 		]
@@ -522,22 +522,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Love you too!",
-				anger: 6,
+				anger: 9,
 				reaction: "Where's the 'I'? Lazy response! 🙄"
 			},
 			{
 				text: "Aww, thanks babe!",
-				anger: 15,
+				anger: 19,
 				reaction: "THANKS?! She said she LOVES you! 💔"
 			},
 			{
 				text: "*Kiss her instead of responding*",
-				anger: 8,
+				anger: 12,
 				reaction: "Use your words! She needs to hear it! 😤"
 			},
 			{
 				text: "I know.",
-				anger: 12,
+				anger: 16,
 				reaction: "Okay Han Solo, how romantic! 😠"
 			}
 		]
@@ -549,22 +549,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Nothing.",
-				anger: 10,
+				anger: 14,
 				reaction: "How can you think about NOTHING?! 😤"
 			},
 			{
 				text: "Just work stuff.",
-				anger: 8,
+				anger: 11,
 				reaction: "Always thinking about work, never her! 🙄"
 			},
 			{
 				text: "How beautiful you are!",
-				anger: 7,
+				anger: 10,
 				reaction: "Too cheesy! What were you REALLY thinking? 😒"
 			},
 			{
 				text: "The game later.",
-				anger: 12,
+				anger: 16,
 				reaction: "THE GAME?! While cuddling with her?! 😠"
 			}
 		]
@@ -576,22 +576,22 @@ export const questions = [
 		answers: [
 			{
 				text: "No! I love our time together!",
-				anger: 6,
+				anger: 9,
 				reaction: "That was too quick. Be honest! 🙄"
 			},
 			{
 				text: "Sometimes we could use space...",
-				anger: 13,
+				anger: 17,
 				reaction: "So she's CLINGY now?! Wow! 😤"
 			},
 			{
 				text: "Why? Do YOU think that?",
-				anger: 9,
+				anger: 13,
 				reaction: "Don't turn this around on her! 😠"
 			},
 			{
 				text: "Quality over quantity, right?",
-				anger: 11,
+				anger: 15,
 				reaction: "So the quantity is too much? Thanks! 😒"
 			}
 		]
@@ -603,22 +603,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Jake's always been weird.",
-				anger: 8,
+				anger: 12,
 				reaction: "Don't insult her admirers! Jealous much? 😤"
 			},
 			{
 				text: "Can't blame him!",
-				anger: 6,
+				anger: 9,
 				reaction: "So you're okay with this?! 🙄"
 			},
 			{
 				text: "I'll talk to him.",
-				anger: 11,
+				anger: 15,
 				reaction: "Territorial much? She can handle it! 😠"
 			},
 			{
 				text: "Are you sure?",
-				anger: 9,
+				anger: 13,
 				reaction: "Questioning her intuition? She KNOWS! 😒"
 			}
 		]
@@ -630,22 +630,22 @@ export const questions = [
 		answers: [
 			{
 				text: "But you hate the gym?",
-				anger: 10,
+				anger: 14,
 				reaction: "She's trying! Be supportive! 😤"
 			},
 			{
 				text: "I like working out alone...",
-				anger: 12,
+				anger: 16,
 				reaction: "Too good to exercise with her? 😠"
 			},
 			{
 				text: "Sure! When do you want to start?",
-				anger: 5,
+				anger: 8,
 				reaction: "Tomorrow? That's too soon! 🙄"
 			},
 			{
 				text: "We could try yoga instead?",
-				anger: 8,
+				anger: 11,
 				reaction: "Why? Think she can't handle real exercise? 😒"
 			}
 		]
@@ -657,22 +657,22 @@ export const questions = [
 		answers: [
 			{
 				text: "Whoa, let's slow down!",
-				anger: 12,
+				anger: 16,
 				reaction: "It's a normal question! Why panic?! 😤"
 			},
 			{
 				text: "How many do YOU want?",
-				anger: 8,
+				anger: 11,
 				reaction: "She asked first! Stop deflecting! 🙄"
 			},
 			{
 				text: "Two seems nice?",
-				anger: 6,
+				anger: 9,
 				reaction: "She wants three. You'd know if you listened! 😠"
 			},
 			{
 				text: "Kids? In THIS economy?",
-				anger: 10,
+				anger: 14,
 				reaction: "Way to kill the romance with reality! 😒"
 			}
 		]
