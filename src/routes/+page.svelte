@@ -60,7 +60,7 @@
 					<div class="hero-badge" in:fly={{ y: 20, duration: 400 }}>
 						💘 Relationship Training Simulator 💘
 					</div>
-					<h1 class="hero-title" in:fly={{ y: 20, duration: 400, delay: 100 }}>
+					<h1 class="hero-title" in:fly={{ y: 20, duration: 400, delay: 10 }}>
 						Love Survival Kit
 					</h1>
 					<p class="hero-subtitle" in:fly={{ y: 20, duration: 400, delay: 200 }}>
